@@ -1,0 +1,439 @@
+﻿
+@model MovieBringer.Core.Models.ViewModel.MovieList.MovieListViewModel
+
+@{
+    ViewData["Title"] = "CreateList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid">
+
+    <section class="section section--first section--bg" data-bg="img/section/section.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section__wrap">
+                        <!-- section title -->
+                        <h2 class="section__title">Edit List</h2>
+                        <!-- end section title -->
+                        <!-- breadcrumb -->
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb__item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb__item breadcrumb__item--active">Profile</li>
+                        </ul>
+                        <!-- end breadcrumb -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="dashbox__wrap">
+                    <a id="@Model.Id" href="#modal-list-delete" style="width: auto;padding:10px;color:red" class="dashbox__more  opening_modal_delete open-modal ">Delete List</a>
+                </div>
+            </div>
+    </section>
+
+    <div class="content content--profile">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-6">
+
+                    <form id="changePasswordForm" class="form form--profile">
+                        <div class="row row--form">
+
+                            <div class="col-12 mb-4">
+                                <h4 class="form__title">Add movies to your list</h4>
+                                <div class="form__group">
+                                    <input style="width:100%; float:left;" id="inputSearch" class="header__search-input" type="text" placeholder="Search for adding movies to your list...">
+                                    <div class="loading-spinner d-none" style="float:right; width: 30px;">
+                                        <img src="https://i.gifer.com/ZKZg.gif" alt="Loading..." style="width: 100%;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mb-4">
+                                <div id="searchResult" class="search-results">
+
+                                </div>
+                            </div>
+
+                            <div id="listMovies" class="col-12 mb-4">
+
+                                @foreach (var movie in Model.MoviesInlist)
+                                {
+                                    <div id="movieHis_@movie.MovieHistoryId" class="col-12">
+                                        <div class="profile__content px-2">
+                                            <div class="profile__user">
+                                                <div class="section__title mr-2"><p class="p-2">@movie.DisplayOrder</p></div>
+                                                <div class="profile__avatar">
+                                                    <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/@movie.poster_path" alt="">
+                                                </div>
+                                                <div class="profile__meta profile__meta--green">
+                                                    <h3>@movie.title</h3>
+                                                    <span>@movie.release_date</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="profile__actions">
+                                                <button onclick="UpOrder(@movie.MovieHistoryId,@Model.Id)" class="profile__action profile__action--banned "><i class="icon ion-ios-arrow-up"></i></button>
+                                                <button onclick="DownOrder(@movie.MovieHistoryId,@Model.Id)" class="profile__action profile__action--banned "><i class="icon ion-ios-arrow-down"></i></button>
+                                                <button onclick="DeleteMovieFromList(@movie.MovieHistoryId,@Model.Id)" class="profile__action profile__action--delete"><div id="btnSpinner_@movie.MovieHistoryId"><i class="icon ion-ios-trash"></i></div></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                            <div class="t-center d-none">
+                                <div class="add-spinner ">
+                                    <img src="https://i.gifer.com/ZKZg.gif" alt="Loading..." style="width: 100%;">
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <!-- details form -->
+                <div class="col-12 col-lg-6">
+                    <form id="profileDetail" asp-controller="MovieList" asp-action="EditList" class="form form--profile">
+                        <input type="hidden" name="Id" id="movieListID" value="@Model.Id" />
+                        <div class="row row--form">
+                            <div class="col-12">
+                                <h4 class="form__title">List details</h4>
+                                <div id="proile-error" class="ml-3"></div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form__group">
+                                    <label class="form__label" for="ListName">List Name</label>
+                                    <input asp-for="ListName" class="form__input mb-1">
+                                    <span class="mb-danger mb-4" asp-validation-for="ListName"></span>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <div class="form__group">
+                                    <label class="form__label" for="Description">Description</label>
+                                    <textarea asp-for="Description" class="form__textarea" placeholder="Description"></textarea>
+                                </div>
+
+                            </div>
+                            <div class="col-12 mt-4">
+                                <label asp-for="MovieListType" class="form__label">Movie List Type</label>
+                                <select class="js-example-basic-single" asp-for="MovieListType">
+
+                                    <option value=""></option>
+                                    <option value="1">Movie</option>
+                                </select>
+                                <span class="mb-danger" asp-validation-for="MovieListType"></span>
+                            </div>
+                            <div class=" col-12 mt-4 sign__group sign__group--checkbox">
+                                <input asp-for="IsPrivate" type="checkbox">
+                                <label asp-for="IsPrivate">Private List</label>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button id="submitProfileBtn" class="form__btn" type="submit">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- end details form -->
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<!-- modal list delete -->
+<div id="modal-list-delete" class="zoom-anim-dialog mfp-hide modal">
+    <h6 class="modal__title">List delete</h6>
+    <div id="delete-exp-error">
+    </div>
+    <p class="modal__text">Are you sure to permanently delete this list? All movies you added will gonna deleted!</p>
+
+    <div class="modal__btns">
+        <button id="listDeleteAccept" class="modal__btn modal__btn--apply" type="button">Delete</button>
+        <button class="modal__btn modal__btn--dismiss skillDissmisClick" type="button">Dismiss</button>
+    </div>
+</div>
+<!-- end modal list delete -->
+
+
+@section Scripts{
+
+    <script>
+        const LISTID=@Model.Id;
+    </script>
+
+    @*<environment names="Development">
+        <script src="movielist-editlist-bundle" debug="true"></script>
+    </environment>
+
+    <environment names="Production">
+        <script src="movielist-editlist-bundle"></script>
+    </environment>*@
+
+<script>
+    $(document).ready(function () {
+        $('#MovieListType').select2({
+            placeholder: "Choose List Type",
+            allowClear: true
+        });
+
+        $('body').on('click', '.opening_modal_delete', function () {
+            let id = this.id;
+            $("#listDeleteAccept").click(function () {
+                DeleteList(id)
+            });
+        });
+
+        $('#inputSearch').on('input', function () {
+            $('.loading-spinner').addClass('d-block');
+            $('.loading-spinner').removeClass('d-none');
+            var searchText = $(this).val();
+            if (searchText.length > 0) {
+
+                $.ajax({
+                    url: '/MovieList/MovieSearch',
+                    method: 'GET',
+                    data: { value: searchText },
+                    success: function (response) {
+
+                        var movies = response.data;
+                        $('#searchResult').empty();
+
+                        if (response.isValid && response.data.length > 0) {
+                            $('.loading-spinner').addClass('d-none');
+                            $('.loading-spinner').removeClass('d-block');
+
+                            $.each(movies, function (index, movie) {
+                                $('#searchResult').append(`<div id="${movie.id}"  class="movie"> ${movie.title} (${movie.release_date})</div>`);
+                            });
+                        } else {
+
+                            $('.loading-spinner').addClass('d-none');
+                            $('.loading-spinner').removeClass('d-block');
+                            $('#searchResult').append('<div class="movie">No results found</div>');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                    }
+                });
+            } else {
+                $('.loading-spinner').addClass('d-none');
+                $('.loading-spinner').removeClass('d-block');
+                $('#searchResult').empty();
+            }
+        });
+
+        //listeye film ekleme
+        $('.search-results').on('click', '.movie', function () {
+
+            $('.t-center').addClass('d-block');
+            $('.t-center').removeClass('d-none');
+
+            var _movieId = $(this).attr('id');
+            var _listId = $("#movieListID").val();
+
+            $.ajax({
+                url: '/MovieList/AddMovieToList',
+                method: 'POST',
+                data: { movieId: _movieId, listId: _listId },
+                success: function (response) {
+                    $('.search-results').empty();
+
+                    if (response.isValid) {
+
+                        var gonnaAppendMovie =
+                            `
+                        <div id="movieHis_${response.data.movieHistoryId}"  class="col-12">
+                            <div class="profile__content px-2">
+                                <!-- profile user -->
+                                <div class="profile__user">
+
+                                    <div class="section__title mr-2"><p class="p-2">${response.data.displayOrder}</p></div>
+
+                                        <div class="profile__avatar">
+                                            <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/${response.data.poster_path}" alt="">
+                                        </div>
+                                        <!-- or red -->
+                                        <div class="profile__meta profile__meta--green">
+                                            <h3>${response.data.title}</h3>
+                                            <span>${response.data.release_date}</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- profile btns -->
+                                    <div class="profile__actions">
+                                        <button onclick="UpOrder(${response.data.movieHistoryId},${LISTID})" class="profile__action profile__action--banned "><i class="icon ion-ios-arrow-up"></i></button>
+
+                                        <button onclick="DownOrder(${response.data.movieHistoryId},${LISTID})" class="profile__action profile__action--banned "><i class="icon ion-ios-arrow-down"></i></button>
+
+
+                                            <button onclick="DeleteMovieFromList(${response.data.movieHistoryId})" class="profile__action profile__action--delete"><div id="btnSpinner_${response.data.movieHistoryId}"><i class="icon ion-ios-trash"></i></div></button>
+                                                </div>
+                                                <!-- end profile btns -->
+                                            </div>
+                            </div>`;
+
+                        $('#listMovies').append(gonnaAppendMovie);
+
+
+                        $('.t-center').addClass('d-none');
+                        $('.t-center').removeClass('d-block');
+
+                        MyToast.fire({
+                            icon: 'success',
+                            title: response.successMessage
+                        })
+
+
+                    } else {
+                        $('.t-center').addClass('d-none');
+                        $('.t-center').removeClass('d-block');
+                        
+                        //toast error
+                        MyToast.fire({
+                            icon: 'error',
+                            title: response.errorMessage
+                        })
+                    }
+                },
+                error: function (xhr, status, error) {
+                }
+            });
+
+        });
+
+    });
+
+    function DeleteList(listId) {
+        event.preventDefault();
+        $.ajax({
+            url: '/MovieList/DeleteList',
+            method: 'POST',
+            data: { listId: listId },
+            success: function (response) {
+
+                if (response.isValid) {
+
+                    MyToast.fire({
+                        icon: 'success',
+                        title: response.message
+                    }).then(function () {
+                        location.href = '/Profile';
+                    })
+
+                } else {
+                    MyToast.fire({
+                        icon: 'error',
+                        title: response.message
+                    })
+                    //toast error
+                }
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
+
+    function DeleteMovieFromList(movieHistId, listId) {
+        event.preventDefault();
+        $("#btnSpinner_" + movieHistId).empty().append('<img src="https://i.gifer.com/ZKZg.gif" alt="Loading..." style="width: 100%;">');
+
+        $.ajax({
+            url: '/MovieList/RemoveMovieFromList',
+            method: 'POST',
+            data: { movieListHistoryId: movieHistId, movieListId: listId },
+            success: function (response) {
+                console.log(response)
+                if (response.isValid) {
+
+                    var gonnaDeletedMovie = $("#movieHis_" + movieHistId);
+                    gonnaDeletedMovie.remove();
+                    -
+
+                        $('.t-center').addClass('d-none');
+                    $('.t-center').removeClass('d-block');
+
+                    MyToast.fire({
+                        icon: 'success',
+                        title: response.successMessage
+                    }).then(function () {
+                        location.reload();
+                    })
+
+                } else {
+                    $('.t-center').addClass('d-none');
+                    $('.t-center').removeClass('d-block');
+                    $("#btnSpinner_" + movieHistId).empty().append('<i class="icon ion-ios-trash"></i>');
+                    alert("error")
+                    //toast error
+                }
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
+
+    function UpOrder(movieHistId, listId) {
+        event.preventDefault();
+
+        $.ajax({
+            url: '/MovieList/UpOrder',
+            method: 'POST',
+            data: { movieListHistoryId: movieHistId, listId: listId },
+            success: function (response) {
+                console.log(response)
+
+                if (response.isValid) {
+
+                    MyToast.fire({
+                        icon: 'success',
+                        title: response.successMessage
+                    }).then(function () {
+                        location.reload();
+                    })
+
+                } else {
+                    MyToast.fire({
+                        icon: 'error',
+                        title: response.errorMessage
+                    })
+                }
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
+
+    function DownOrder(movieHistId, listId) {
+        event.preventDefault();
+        $.ajax({
+            url: '/MovieList/DownOrder',
+            method: 'POST',
+            data: { movieListHistoryId: movieHistId, listId: listId },
+            success: function (response) {
+
+                if (response.isValid) {
+
+                    MyToast.fire({
+                        icon: 'success',
+                        title: response.successMessage
+                    }).then(function () {
+                        location.reload();
+                    })
+                } else {
+                    MyToast.fire({
+                        icon: 'error',
+                        title: response.errorMessage
+                    })
+                }
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
+</script>
+
+    
+}

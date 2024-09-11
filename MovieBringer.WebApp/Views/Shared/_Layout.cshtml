@@ -1,0 +1,311 @@
+﻿
+@if (TempData["message"] != null)
+{
+    var calssType = TempData["messageType"];
+    <div class="server-alert-@calssType">
+        @TempData["message"]
+    </div>
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5289757408949279"
+            crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/Resource/MainHotFlix/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="~/Resource/MainHotFlix/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="~/Resource/MainHotFlix/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Resource/MainHotFlix/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="~/Resource/MainHotFlix/css/nouislider.min.css">
+    <link rel="stylesheet" href="~/Resource/MainHotFlix/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/Resource/AdminHotFlix/css/select2.min.css">
+    <link rel="stylesheet" href="~/Resource/MainHotFlix/css/magnific-popup.css">
+
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/Content/css/mycss.css" rel="stylesheet" />
+
+    <!-- smidge bundle start -->
+    <environment names="Development">
+        <link rel="stylesheet" href="my-css-bundle" debug="true" />
+    </environment>
+
+    <environment names="Production">
+        <link rel="stylesheet" href="my-css-bundle" />
+    </environment>
+
+    <!-- bundle da -->
+    @*
+        <link rel="stylesheet" href="~/Resource/MainHotFlix/css/main.css">
+        <link rel="stylesheet" href="~/Resource/MainHotFlix/css/plyr.css">
+        <link rel="stylesheet" href="~/Resource/MainHotFlix/css/photoswipe.css">
+        <link rel="stylesheet" href="~/Resource/MainHotFlix/css/default-skin.css">
+    *@
+    <!-- smidge bundle end -->
+    <!-- Favicons -->
+    <link rel="icon" type="~/Resource/MainHotFlix/image/png" href="icon/favicon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="icon/favicon-32x32.png">
+
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Recai Öztürk">
+    <title>MovieDeck – Create your movie lists</title>
+
+
+</head>
+
+
+
+<body class="body">
+    <!-- header -->
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="header__content">
+                        <!-- header logo -->
+                        <a  href="/" class="header__logo">
+                            <img style="scale: 1.5;" src="~/Resource/MainHotFlix/img/logo.svg" alt="">
+                        </a>
+                        <!-- end header logo -->
+                        <!-- header nav -->
+                        <ul class="header__nav">
+
+
+                            @*@if (User.Identity.IsAuthenticated)
+                                {
+                                    <li class="header__nav-item">
+                                        <a asp-controller="swagger" asp-action="index" class="header__nav-link">API</a>
+                                    </li>
+                                }*@
+
+
+                            <li class="header__nav-item">
+                                <a asp-controller="Movie" asp-action="Movies" class="header__nav-link">Movies</a>
+                            </li>
+
+                            <li class="header__nav-item">
+                                <a asp-controller="MovieList" asp-action="Index" class="header__nav-link">Lists</a>
+                            </li>
+
+
+                        </ul>
+                        <!-- end header nav -->
+                        <!-- header auth -->
+                        <div class="header__auth">
+                            <form action="#" class="header__search">
+                                <input id="headerSearch" class="header__search-input" type="text" placeholder="Search...">
+                                <div class="loading-spinner spinnerHeader d-none" style="float:right; width: 30px;">
+                                    <img src="https://i.gifer.com/ZKZg.gif" alt="Loading..." style="width: 100%;">
+                                </div>
+                                <button class="header__search-button" type="button">
+                                    <i class="icon ion-ios-search"></i>
+                                </button>
+                                <button class="header__search-close" type="button">
+                                    <i class="icon ion-md-close"></i>
+                                </button>
+                                <div style=" position: absolute; margin-top: 500px;" id="searchResultHeader" class="search-results">
+
+                                </div>
+
+                            </form>
+
+                            <button class="header__search-btn" type="button">
+                                <i class="icon ion-ios-search"></i>
+                            </button>
+
+                            <!-- dropdown -->
+                            <div class="dropdown header__lang">
+                                <a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuLang" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">EN <i class="icon ion-ios-arrow-down"></i></a>
+
+                                <ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuLang">
+                                    <li><a href="#">English</a></li>
+                                    @*<li><a href="#">Spanish</a></li>
+                <li><a href="#">Russian</a></li>*@
+                                </ul>
+                            </div>
+                            <!-- end dropdown -->
+
+                            @if (User.Identity?.IsAuthenticated == true)
+                            {
+                                <a asp-controller="profile" asp-action="Index" class="header__sign-in">
+                                    <i class="icon ion-ios-log-in"></i>
+                                    <span>@User.Identity.Name</span>
+                                </a>
+
+                                <a asp-controller="Account" asp-action="LogOut" class="header__sign-in">
+                                    <i class="icon ion-ios-log-in"></i>
+                                    <span>Log Out</span>
+                                </a>
+
+                                @*<a style="" asp-controller="Account" asp-action="LogOut" method="post">
+                                    <button class="header__sign-in mt-auto" type="submit">
+                                        <i class="icon ion-ios-log-in"></i>
+                                        <span>Log Out</span>
+                                    </button>
+                                </a>*@
+                            }
+                            else
+                            {
+
+                                <a asp-controller="Account" asp-action="Login" class="header__sign-in">
+                                    <i class="icon ion-ios-log-in"></i>
+                                    <span>Sign in</span>
+                                </a>
+
+                            }
+
+                        </div>
+                        <!-- end header auth -->
+                        <!-- header menu btn -->
+                        <button class="header__btn" type="button">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <!-- end header menu btn -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- end header -->
+
+    @RenderBody()
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="footer__content">
+                        <a href="index.html" class="footer__logo">
+                            <img src="~/Resource/MainHotFlix/img/logo.svg" alt="">
+                        </a>
+
+                        <span class="footer__copyright"> Created by <a href="https://www.recaiozturk.com" target="_blank">Recai Öztürk</a></span>
+
+                        <nav class="footer__nav">
+                            @*<a href="about.html">About Us</a>
+                                <a href="contacts.html">Contacts</a>
+                                <a href="privacy.html">Privacy policy</a>*@
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a asp-controller="swagger" asp-action="index">API</a>
+                            }
+
+                        </nav>
+
+                        <button class="footer__back" type="button">
+                            <i class="icon ion-ios-arrow-round-up"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- end footer -->
+    <!-- JS -->
+
+    <script src="~/Resource/MainHotFlix/js/jquery-3.5.1.min.js"></script>
+    <script src="~/Resource/MainHotFlix/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Resource/MainHotFlix/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/Resource/MainHotFlix/js/jquery.mousewheel.min.js"></script>
+    <script src="~/Resource/MainHotFlix/js/jquery.mCustomScrollbar.min.js"></script>
+    <script src="~/Resource/MainHotFlix/js/nouislider.min.js"></script>
+    <script src="~/Resource/MainHotFlix/js/plyr.min.js"></script>
+    <script src="~/Resource/MainHotFlix/js/photoswipe.min.js"></script>
+    <script src="~/Resource/MainHotFlix/js/photoswipe-ui-default.min.js"></script>
+    <script src="~/Resource/MainHotFlix/js/owl.carousel.min.js"></script>
+    <script src="~/Resource/AdminHotFlix/js/select2.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+
+
+    <!-- smidge bundle start -->
+    <!-- bundle içinde -->
+    @*<script src="~/Resource/MainHotFlix/js/main.js"></script>
+        <script src="~/js/Custom/sweetAlertCustom.js"></script>
+        <script src="~/Resource/MainHotFlix/js/wNumb.js"></script>
+    *@
+    <environment names="Development">
+        <script src="my-js-bundle" debug="true"></script>
+    </environment>
+
+    <environment names="Production">
+        <script src="my-js-bundle"></script>
+    </environment>
+    <!-- smidge bundle end -->
+
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $(".server-alert-success").slideUp();
+            }, 3500);
+        });
+
+        $('.ion-md-close').on('click', function () {
+            $('#searchResultHeader').empty();
+        });
+
+        function goDetail(id) {
+            var url = `/Movie/Detail/${id}`;
+            window.location.href = url;
+        }
+
+        $('#headerSearch').on('input', function () {
+            $('.spinnerHeader').addClass('d-block');
+            $('.spinnerHeader').removeClass('d-none');
+            var searchText = $(this).val();
+            if (searchText.length > 0) {
+
+                $.ajax({
+                    url: '/MovieList/MovieSearch',
+                    method: 'GET',
+                    data: { value: searchText },
+                    success: function (response) {
+
+                        var movies = response.data;
+                        $('#searchResultHeader').empty();
+
+                        if (response.isValid && response.data.length > 0) {
+                            $('.spinnerHeader').addClass('d-none');
+                            $('.spinnerHeader').removeClass('d-block');
+
+                            $.each(movies, function (index, movie) {
+                                $('#searchResultHeader').append(`<div onclick="goDetail(${movie.id})" id="${movie.id}"  class="movie"><img style="height: 70px;" src="https://media.themoviedb.org/t/p/w220_and_h330_face/${movie.poster_path}"></img> ${movie.title} (${movie.release_date})</div>`);
+                            });
+                        } else {
+
+                            $('.spinnerHeader').addClass('d-none');
+                            $('.spinnerHeader').removeClass('d-block');
+                            $('#searchResultHeader').append('<div class="movie">No results found</div>');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                    }
+                });
+            } else {
+                $('.spinnerHeader').addClass('d-none');
+                $('.spinnerHeader').removeClass('d-block');
+                $('#searchResultHeader').empty();
+            }
+        });
+    </script>
+
+
+
+
+    @RenderSection("Scripts", required: false)
+
+
+</body>
+</html>

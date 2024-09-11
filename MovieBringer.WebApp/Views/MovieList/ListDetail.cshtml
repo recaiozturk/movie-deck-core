@@ -1,0 +1,379 @@
+﻿
+@model MovieBringer.Core.Models.MovieModels.ListDetailViewModel
+
+@{
+    ViewData["Title"] = "ListDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int order = 1;
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+    .modal {
+        max-width: 630px;
+    }
+
+    .mfp-content {
+        width: 700px;
+    }
+
+    div.stars {
+        width: 100%;
+        display: inline-block;
+    }
+
+    .mt-200 {
+        margin-top: 200px;
+    }
+
+    input.star {
+        display: none;
+    }
+
+
+
+    label.star {
+        float: right;
+        padding: 10px;
+        font-size: 36px;
+        color: #4A148C;
+        transition: all .2s;
+    }
+
+
+
+    input.star:checked ~ label.star:before {
+        content: '\f005';
+        color: #FD4;
+        transition: all .25s;
+    }
+
+
+    input.star-5:checked ~ label.star:before {
+        color: #FE7;
+        text-shadow: 0 0 20px #952;
+    }
+
+
+
+    input.star-1:checked ~ label.star:before {
+        color: #F62;
+    }
+
+
+
+    label.star:hover {
+        transform: rotate(-15deg) scale(1.3);
+    }
+
+
+
+    label.star:before {
+        content: '\f006';
+        font-family: FontAwesome;
+    }
+</style>
+
+<div class="col-12">
+    <h1 class="home__title main-color" style="font-size: 30px !important; text-align: center; margin-top: 120px; text-transform:lowercase">@Model.ListName</h1>
+    <h1 class="home__title main-color" style="font-size: 30px !important; text-align: center; text-transform:lowercase"><b>Added by:</b> <a class="main-color" asp-controller="Profile" asp-action="UserProfile" asp-route-userId="@Model.ListOwnerId">@Model.ListOwner</a>&nbsp;&nbsp;&nbsp;<b><i class="icon ion-ios-star-outline"></i> : </b> <span class="main-color">@ViewBag.ListRank</span><span class="how__text ml-3"><a href="#modal-edit-skill" listId="@ViewBag.listId" listOwnerId="@Model.ListOwnerId" style="font-size: 25px;" class="main-color opening_modal_vote open-modalCustom"> vote the list</a></span></h1>
+
+</div>
+
+@foreach (var movie in Model.MoviesInlist)
+{
+
+    <section class="section section--details section--bg" id="background-section-@movie.MovieDetail.id">
+
+        @{
+            string posterUrl = "https://media.themoviedb.org/t/p/w300_and_h450_bestv2" + movie.MovieDetail.poster_path;
+            string bgUrl = "";
+            if (movie.BackdropImages != null)
+                bgUrl = $"https://image.tmdb.org/t/p/original{(movie.BackdropImages.Count > 0 ? movie.BackdropImages[0].file_path : null)}";
+
+            <style>
+                    #background-section-@movie.MovieDetail.id {
+                        background: linear-gradient( rgba(30,27,38, 0.99), rgba(30,27,38, 0.90)), url("@bgUrl");
+                        background-position: center;
+                        background-size: cover;
+                        background-repeat: repeat;
+                    }
+
+            </style>
+        }
+        <!-- details content -->
+        <div class="container">
+            <div class="row">
+                <!-- title -->
+                <div class="col-12">
+                    <h1 class="card__title"><a class="card__title" style="font-size: 25px;" asp-controller="Movie" asp-action="Detail" asp-route-id="@movie.MovieDetail.id"><span class="main-color">#@order&nbsp;&nbsp;</span>@movie.MovieDetail.title</a></h1>
+                    @*<h1 class="section__title section__title--mb"><span class="main-color">#@order&nbsp;&nbsp;</span>@movie.MovieDetail.title</h1>*@
+                </div>
+
+                @{ order++;}
+
+                <div class="col-12 col-xl-12">
+                    <div class="card card--details">
+                        <div class="row">
+                            <!-- card cover -->
+                            <div class="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-5">
+                                <div class="card__cover" style="max-width:350px !important">
+                                    <img src="@posterUrl" alt="">
+                                    <span class="card__rate card__rate--green">@movie.MovieDetail.vote_average.ToString("N1")</span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8 col-lg-9 col-xl-7">
+                                <div class="card__content m-detail-content" style="justify-content:flex-start">
+                                    <ul class="card__meta">
+                                        @if (movie.Crews != null)
+                                        {
+                                            <li><span>Director:</span>@( movie.Crews.FirstOrDefault(x=>x.job== "Director") != null ? movie.Crews.FirstOrDefault(x => x.job == "Director").name : "Director Not Found")</li>
+                                        }
+                                        @if (movie.Casts != null)
+                                        {
+                                            <li>
+                                                <span>Cast:</span>
+                                                @if (movie.Casts != null)
+                                                {
+                                                    foreach (var person in movie.Casts.Take(5))
+                                                    {
+                                                        <a href="#">@person.name</a>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <a href="#">No Cast Found</a>
+                                                }
+
+                                            </li>
+                                        }
+
+                                        <li>
+                                            <span>Genre:</span>
+                                            @foreach (var genre in movie.MovieDetail.genres)
+                                            {
+                                                <a href="#">@genre.name</a>
+                                            }
+                                        </li>
+                                        <li><span>Release date:</span> @movie.MovieDetail.release_date.ToString("M/d/yyyy")</li>
+                                        <li><span>Running time:</span> @movie.MovieDetail.runtime min</li>
+                                        <li><span>Country:</span> <a href="#">@(movie.MovieDetail.production_countries.Count() > 0 ? movie.MovieDetail.production_countries.First().iso_3166_1+" (" + movie.MovieDetail.production_countries.First().name+")" : "Not Found")</a></li>
+                                    </ul>
+                                    @if (movie.MovieDetail.overview != "" || movie.MovieDetail.overview != null)
+                                    {
+                                        <div class="card__description">
+                                            @(movie.MovieDetail.overview != "" ? movie.MovieDetail.overview  : "\"Overwiew not founded-Overwiew not founded-Overwiew not founded-Overwiew not founded-Overwiew not founded     \"")
+                                        </div>
+                                    }
+
+
+                                    @if (movie.MovieVideos != null && movie.MovieVideos.Count() > 0)
+                                    {
+                                        string lastTrailer = movie.MovieVideos.OrderByDescending(t => t.published_at).FirstOrDefault(x => x.type == "Trailer").key;
+                                        string youtubeUrl = "http://www.youtube.com/watch?v=" + lastTrailer;
+                                        <a href="@youtubeUrl" class="card__trailer"><i class="icon ion-ios-play-circle"></i> Watch trailer</a>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- end details -->
+
+
+}
+
+
+<!-- modal edit -->
+<div id="modal-edit-skill" class="zoom-anim-dialog mfp-hide modal">
+    <h6 class="modal__title">vote the list</h6>
+
+    <div class="col-md-12">
+
+        <div id="alreadyVotedArea" class="d-none">
+            <h6 class="modal__title mt-5">you already vote this list</h6>
+        </div>
+
+        <div id="voteArea" class="d-none">
+            <div class="stars">
+                <form action="">
+                    <input class="star star-10" id="star-10" type="radio" data="10" name="star" />
+
+                    <label class="star star-10" for="star-10"></label>
+
+                    <input class="star star-9" id="star-9" type="radio" data="9" name="star" />
+
+                    <label class="star star-9" for="star-9"></label>
+
+                    <input class="star star-8" id="star-8" type="radio" data="8" name="star" />
+
+                    <label class="star star-8" for="star-8"></label>
+
+                    <input class="star star-7" id="star-7" type="radio" data="7" name="star" />
+
+                    <label class="star star-7" for="star-7"></label>
+
+                    <input class="star star-6" id="star-6" type="radio" data="6" name="star" />
+
+                    <label class="star star-6" for="star-6"></label>
+
+
+                    <input class="star star-5" id="star-5" type="radio" data="5" name="star" />
+
+                    <label class="star star-5" for="star-5"></label>
+
+                    <input class="star star-4" id="star-4" type="radio" data="4" name="star" />
+
+                    <label class="star star-4" for="star-4"></label>
+
+                    <input class="star star-3" id="star-3" type="radio" data="3" name="star" />
+
+                    <label class="star star-3" for="star-3"></label>
+
+                    <input class="star star-2" id="star-2" data="2" type="radio" name="star" />
+
+                    <label class="star star-2" for="star-2"></label>
+
+                    <input class="star star-1" id="star-1" data="1" type="radio" name="star" />
+
+                    <label class="star star-1" for="star-1"></label>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+    <div id="edit-skill-error">
+    </div>
+    <span class="d-none" id="spinner">
+        <img style="width:20px" src="~/loading_gif.webp" />
+    </span>
+    <div class="modal__btns">
+        <button id="voteSave" class="modal__btn modal__btn--apply d-none" type="button">Save</button>
+        <button id="voteSaveAgain" class="modal__btn modal__btn--apply d-none" type="button">Vote Again</button>
+        <button id="voteDismiss" class="modal__btn modal__btn--dismiss skillDissmisClick" type="button">Dismiss</button>
+    </div>
+</div>
+<!-- end modal edit -->
+
+@section Scripts {
+
+    <script>
+        var voterId = "@ViewBag.UserId";
+        var votable = "@User.Identity.IsAuthenticated".toLowerCase() == "true";
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+
+            if (!votable) {
+                $('body').on('click', '.opening_modal_vote', function () {
+                    MyToast.fire({
+                        icon: 'error',
+                        title: "Please log in to vote."
+                    })
+                });
+
+            } else {
+
+                $('.open-modalCustom').magnificPopup({
+                    fixedContentPos: true,
+                    fixedBgPos: true,
+                    overflowY: 'auto',
+                    type: 'inline',
+                    preloader: false,
+                    focus: '#username',
+                    modal: false,
+                    removalDelay: 300,
+                    mainClass: 'my-mfp-zoom-in',
+                });
+
+                let rank = 0;
+                let listId;
+
+                $('body').on('click', '.opening_modal_vote', function () {
+
+                    listId = $(this).attr('listId');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/MovieList/VoteCheck',
+                        dataType: 'json',
+                        data: { voteValue: rank, listId: listId, voteOwnerId: voterId },
+                        success: function (res) {
+                            console.log(res)
+                            if (!res.isValid) {
+                                //false ise daha önceden vote-oylanmamış ise
+
+                                $("#voteSave").removeClass("d-none");
+                                $("#voteArea").removeClass("d-none");
+                                $("#voteSaveAgain").addClass("d-none");
+                                $("#alreadyVotedArea").addClass("d-none");
+
+                            } else {
+
+                                $("#voteSave").addClass("d-none");
+                                $("#voteArea").addClass("d-none");
+                                $("#voteSaveAgain").removeClass("d-none");
+                                $("#alreadyVotedArea").removeClass("d-none");
+                            }
+                        }
+                    });
+
+                });
+
+                $("#voteSave").click(function () {
+
+                    $("#voteSave").text("Saving...");
+                    $("#voteSave").addClass("btnDisabled");
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/MovieList/VoteList',
+                        dataType: 'json',
+                        data: { voteValue: rank, listId: listId, voteOwnerId: voterId },
+                        success: function (res) {
+                            if (!res.isValid) {
+                                MyToast.fire({
+                                    icon: 'danger',
+                                    title: res.errorMessages[0]
+                                })
+
+                            } else {
+                                $("#voteSave").text("Save");
+                                $("#voteSave").removeClass("btnDisabled");
+                                $(".skillDissmisClick").click();
+                                MyToast.fire({
+                                    icon: 'success',
+                                    title: res.successMessage
+                                })
+                            }
+                        }
+                    });
+                });
+
+                $("#voteSaveAgain").click(function () {
+                    $("#voteArea").removeClass("d-none");
+                    $("#voteSaveAgain").addClass("d-none");
+                    $("#voteSave").removeClass("d-none");
+                    $("#alreadyVotedArea").addClass("d-none");
+                });
+
+                $('input[name="star"]').click(function () {
+                    var dataValue = $(this).attr('data');
+                    rank = dataValue;
+                });
+            }
+
+        });
+
+    </script>
+}

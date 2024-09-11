@@ -1,0 +1,30 @@
+{
+  "ConnectionStrings": {
+    "providerName": "System.Data.SqlClient",
+    "database": "Your Connnection String"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "EmailSender": {
+    "Host": "smtp-relay.brevo.com",
+    "Port": 587,
+    "EnableSSL": true,
+    "UserName": "Your User Name",
+    "Password": "Your Password"
+  },
+  "AppSettings": {
+    "Secret": "Your Secret",
+    "OMDBToken": "Your OMDB Api Key",
+    "OMDBBaseUrl": "https://api.themoviedb.org/3/",
+    "WebUrl": "https://localhost:7153"
+  },
+  "smidge": {
+    "dataFolder": "App_Data/smidge",
+    "version": 1
+  },
+  "AllowedHosts": "*"
+}

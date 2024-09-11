@@ -1,0 +1,649 @@
+﻿@model MovieBringer.Core.Models.MovieModels.MovieDetailModel
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string userId = "";
+
+    if (User.Identity.IsAuthenticated)
+    {
+
+        @using System.Security.Claims
+
+        userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+    }
+
+}
+
+<!-- details -->
+<section class="section section--details section--bg" id="background-section">
+
+    @{
+        string posterUrl = "https://media.themoviedb.org/t/p/w300_and_h450_bestv2" + Model.MovieDetail.poster_path;
+
+
+        string bgUrl = $"https://image.tmdb.org/t/p/original{(Model.BackdropImages.Count > 0 ? Model.BackdropImages[0].file_path : null)}";
+
+        <style>
+            #background-section {
+                background: linear-gradient( rgba(30,27,38, 0.90), rgba(30,27,38, 0.90)), url("@bgUrl");
+                background-position: center;
+                background-size: cover;
+                background-repeat: repeat;
+            }
+
+        </style>
+    }
+    <!-- details content -->
+    <div class="container">
+        <div class="row">
+            <!-- title -->
+            <div class="col-12">
+                <h1 class="section__title section__title--mb">@Model.MovieDetail.title</h1>
+            </div>
+            <!-- end title -->
+            <!-- content -->
+            <div class="col-12 col-xl-12">
+                <div class="card card--details">
+                    <div class="row">
+                        <!-- card cover -->
+                        <div class="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-5">
+                            <div class="card__cover" style="max-width:350px !important">
+                                <img src="@posterUrl" alt="">
+                                <span class="card__rate card__rate--green">@Model.MovieDetail.vote_average.ToString("N1")</span>
+                            </div>
+                            @*<a href="http://www.youtube.com/watch?v=0O2aH4XLbto" class="card__trailer"><i class="icon ion-ios-play-circle"></i> Watch trailer</a>*@
+                        </div>
+                        <!-- end card cover -->
+                        <!-- card content -->
+                        <div class="col-12 col-md-8 col-lg-9 col-xl-7">
+                            <div class="card__content m-detail-content" style="justify-content:flex-start">
+                                <ul class="card__meta">
+                                    <li><span>Director:</span>@(Model.Crews != null ? Model.Crews.FirstOrDefault(x=>x.job== "Director").name : "Director Not Found")</li>
+                                    <li>
+                                        <span>Cast:</span>
+                                        @if (Model.Casts != null)
+                                        {
+                                            foreach (var person in Model.Casts.Take(5))
+                                            {
+                                                <a href="#">@person.name</a>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <a href="#">No Cast Found</a>
+                                        }
+
+                                    </li>
+                                    <li>
+                                        <span>Genre:</span>
+                                        @foreach (var genre in Model.MovieDetail.genres)
+                                        {
+                                            <a href="#">@genre.name</a>
+                                        }
+                                    </li>
+                                    <li><span>Release date:</span> @Model.MovieDetail.release_date.ToString("M/d/yyyy")</li>
+                                    <li><span>Running time:</span> @Model.MovieDetail.runtime min</li>
+                                    <li><span>Country:</span> <a href="#">@(Model.MovieDetail.production_countries.Count() > 0 ? Model.MovieDetail.production_countries.First().iso_3166_1+" (" + Model.MovieDetail.production_countries.First().name+")" : "Not Found")</a></li>
+                                </ul>
+                                <div class="card__description">
+                                    @Model.MovieDetail.overview
+                                </div>
+
+                                @if (Model.MovieVideos != null && Model.MovieVideos.Count() > 0)
+                                {
+                                    string lastTrailer = Model.MovieVideos.OrderByDescending(t => t.published_at).FirstOrDefault(x => x.type == "Trailer").key;
+                                    string youtubeUrl = "http://www.youtube.com/watch?v=" + lastTrailer;
+                                    <a href="@youtubeUrl" class="card__trailer"><i class="icon ion-ios-play-circle"></i> Watch trailer</a>
+
+                                    if (User.Identity.IsAuthenticated)
+                                    {
+                                        <button href="#modal-edit-skill" class="card__trailer opening_modal_vote open-modalCustom"><i class="icon  ion ion-md-add-circle"></i> Add To List</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="card__trailer opening_modal_vote open-modalCustom"><i class="icon  ion ion-md-add-circle"></i> Add To List</button>
+                                    }
+
+                                }
+
+
+                            </div>
+
+                        </div>
+                        <!-- end card content -->
+                    </div>
+                </div>
+            </div>
+            <!-- end content -->
+            <!-- player -->
+            <!--<div class="col-12 col-xl-6">
+                <video controls crossorigin playsinline poster="../../cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg" id="player">-->
+            <!-- Video files -->
+            <!--<source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4" size="576">
+            <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4" type="video/mp4" size="720">
+            <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4" type="video/mp4" size="1080">-->
+            <!-- Caption files -->
+            <!--<track kind="captions" label="English" srclang="en" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
+                   default>
+            <track kind="captions" label="Français" srclang="fr" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt">-->
+            <!-- Fallback for browsers that don't support the <video> element -->
+            <!--<a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>
+                </video>
+            </div>-->
+            <!-- end player -->
+        </div>
+    </div>
+    <!-- end details content -->
+</section>
+<!-- end details -->
+<!-- content -->
+<section class="content">
+    <div class="content__head">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- content title -->
+                    <h2 class="content__title">Discover</h2>
+                    <!-- end content title -->
+                    <!-- content tabs nav -->
+                    <ul class="nav nav-tabs content__tabs" id="content__tabs" role="tablist">
+
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">Photos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">Comments(Soon)</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">Reviews(Soon)</a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab-4" role="tab" aria-controls="tab-4" aria-selected="false">Posters</a>
+                        </li>
+                    </ul>
+                    <!-- end content tabs nav -->
+                    <!-- content mobile tabs nav -->
+                    <div class="content__mobile-tabs" id="content__mobile-tabs">
+                        <div class="content__mobile-tabs-btn dropdown-toggle" role="navigation" id="mobile-tabs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <input type="button" value="Comments">
+                            <span></span>
+                        </div>
+
+                        <div class="content__mobile-tabs-menu dropdown-menu" aria-labelledby="mobile-tabs">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item"><a class="nav-link active" id="2-tab" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">Comments</a></li>
+
+                                <li class="nav-item"><a class="nav-link" id="3-tab" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">Reviews</a></li>
+
+                                <li class="nav-item"><a class="nav-link" id="1-tab" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">Photos</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- end content mobile tabs nav -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-8 col-xl-8">
+                <!-- content tabs -->
+                <div class="tab-content">
+
+                    <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab">
+                        <!-- project gallery -->
+                        <div class="gallery" id="my-gallery" itemscope>
+                            <div class="row row--grid">
+
+                                @if (Model.BackdropImages.Count > 0)
+                                {
+                                    @foreach (var image in Model.BackdropImages.Take(10))
+                                    {
+                                        string imgUrl = $"https://image.tmdb.org/t/p/original{image.file_path}";
+                                        string resolotion = $"{image.width}x{image.height}";
+
+                                        <!-- gallery item -->
+                                        <figure class="col-12 col-sm-6 col-xl-4" itemprop="associatedMedia" itemscope>
+                                            <a href="@imgUrl" itemprop="contentUrl" data-size="@resolotion">
+                                                <img src="@imgUrl" itemprop="thumbnail" alt="Image description" />
+                                            </a>
+                                            <figcaption itemprop="caption description">Some image caption 1</figcaption>
+                                        </figure>
+                                        <!-- end gallery item -->
+                                    }
+                                }
+                                else
+                                {
+                                    <p>No Found Images</p>
+                                }
+
+                            </div>
+                        </div>
+                        <!-- end project gallery -->
+                    </div>
+
+                    <div class="tab-pane fade " id="tab-2" role="tabpanel" aria-labelledby="2-tab">
+                        <div class="row">
+                            <!-- comments -->
+                            @*<div class="col-12">
+                                    <div class="comments">
+                                        <ul class="comments__list">
+                                            <li class="comments__item">
+                                                <div class="comments__autor">
+                                                    <img class="comments__avatar" src="~/Resource/MainHotFlix/img/user.svg" alt="">
+                                                    <span class="comments__name">John Doe</span>
+                                                    <span class="comments__time">30.08.2018, 17:53</span>
+                                                </div>
+                                                <p class="comments__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                                                <div class="comments__actions">
+                                                    <div class="comments__rate">
+                                                        <button type="button"><i class="icon ion-md-thumbs-up"></i>12</button>
+
+                                                        <button type="button">7<i class="icon ion-md-thumbs-down"></i></button>
+                                                    </div>
+
+                                                    <button type="button"><i class="icon ion-ios-share-alt"></i>Reply</button>
+                                                    <button type="button"><i class="icon ion-ios-quote"></i>Quote</button>
+                                                </div>
+                                            </li>
+
+                                            <li class="comments__item comments__item--answer">
+                                                <div class="comments__autor">
+                                                    <img class="comments__avatar" src="~/Resource/MainHotFlix/img/user.svg" alt="">
+                                                    <span class="comments__name">John Doe</span>
+                                                    <span class="comments__time">24.08.2018, 16:41</span>
+                                                </div>
+                                                <p class="comments__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                                                <div class="comments__actions">
+                                                    <div class="comments__rate">
+                                                        <button type="button"><i class="icon ion-md-thumbs-up"></i>8</button>
+
+                                                        <button type="button">3<i class="icon ion-md-thumbs-down"></i></button>
+                                                    </div>
+
+                                                    <button type="button"><i class="icon ion-ios-share-alt"></i>Reply</button>
+                                                    <button type="button"><i class="icon ion-ios-quote"></i>Quote</button>
+                                                </div>
+                                            </li>
+
+                                            <li class="comments__item comments__item--quote">
+                                                <div class="comments__autor">
+                                                    <img class="comments__avatar" src="~/Resource/MainHotFlix/img/user.svg" alt="">
+                                                    <span class="comments__name">John Doe</span>
+                                                    <span class="comments__time">11.08.2018, 11:11</span>
+                                                </div>
+                                                <p class="comments__text"><span>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</span>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                                <div class="comments__actions">
+                                                    <div class="comments__rate">
+                                                        <button type="button"><i class="icon ion-md-thumbs-up"></i>11</button>
+
+                                                        <button type="button">1<i class="icon ion-md-thumbs-down"></i></button>
+                                                    </div>
+
+                                                    <button type="button"><i class="icon ion-ios-share-alt"></i>Reply</button>
+                                                    <button type="button"><i class="icon ion-ios-quote"></i>Quote</button>
+                                                </div>
+                                            </li>
+
+                                            <li class="comments__item">
+                                                <div class="comments__autor">
+                                                    <img class="comments__avatar" src="~/Resource/MainHotFlix/img/user.svg" alt="">
+                                                    <span class="comments__name">John Doe</span>
+                                                    <span class="comments__time">07.08.2018, 14:33</span>
+                                                </div>
+                                                <p class="comments__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                                                <div class="comments__actions">
+                                                    <div class="comments__rate">
+                                                        <button type="button"><i class="icon ion-md-thumbs-up"></i>99</button>
+
+                                                        <button type="button">35<i class="icon ion-md-thumbs-down"></i></button>
+                                                    </div>
+
+                                                    <button type="button"><i class="icon ion-ios-share-alt"></i>Reply</button>
+                                                    <button type="button"><i class="icon ion-ios-quote"></i>Quote</button>
+                                                </div>
+                                            </li>
+
+                                            <li class="comments__item">
+                                                <div class="comments__autor">
+                                                    <img class="comments__avatar" src="~/Resource/MainHotFlix/img/user.svg" alt="">
+                                                    <span class="comments__name">John Doe</span>
+                                                    <span class="comments__time">02.08.2018, 15:24</span>
+                                                </div>
+                                                <p class="comments__text">Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+                                                <div class="comments__actions">
+                                                    <div class="comments__rate">
+                                                        <button type="button"><i class="icon ion-md-thumbs-up"></i>74</button>
+
+                                                        <button type="button">13<i class="icon ion-md-thumbs-down"></i></button>
+                                                    </div>
+
+                                                    <button type="button"><i class="icon ion-ios-share-alt"></i>Reply</button>
+                                                    <button type="button"><i class="icon ion-ios-quote"></i>Quote</button>
+                                                </div>
+                                            </li>
+                                        </ul>
+
+                                        <form action="#" class="form">
+                                            <textarea id="text" name="text" class="form__textarea" placeholder="Add comment"></textarea>
+                                            <button type="button" class="form__btn">Send</button>
+                                        </form>
+                                    </div>
+                                </div>*@
+                            <!-- end comments -->
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="3-tab">
+                        <div class="row">
+                            <!-- reviews -->
+                            @*<div class="col-12">
+                                    <div class="reviews">
+                                        <ul class="reviews__list">
+                                            <li class="reviews__item">
+                                                <div class="reviews__autor">
+                                                    <img class="reviews__avatar" src="~/Resource/MainHotFlix/img/user.svg" alt="">
+                                                    <span class="reviews__name">Best Marvel movie in my opinion</span>
+                                                    <span class="reviews__time">24.08.2018, 17:53 by John Doe</span>
+
+                                                    <span class="reviews__rating reviews__rating--green">8.4</span>
+                                                </div>
+                                                <p class="reviews__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                                            </li>
+
+                                            <li class="reviews__item">
+                                                <div class="reviews__autor">
+                                                    <img class="reviews__avatar" src="~/Resource/MainHotFlix/img/user.svg" alt="">
+                                                    <span class="reviews__name">Best Marvel movie in my opinion</span>
+                                                    <span class="reviews__time">24.08.2018, 17:53 by John Doe</span>
+
+                                                    <span class="reviews__rating reviews__rating--green">9.0</span>
+                                                </div>
+                                                <p class="reviews__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                                            </li>
+
+                                            <li class="reviews__item">
+                                                <div class="reviews__autor">
+                                                    <img class="reviews__avatar" src="~/Resource/MainHotFlix/img/user.svg" alt="">
+                                                    <span class="reviews__name">Best Marvel movie in my opinion</span>
+                                                    <span class="reviews__time">24.08.2018, 17:53 by John Doe</span>
+
+                                                    <span class="reviews__rating reviews__rating--red">5.5</span>
+                                                </div>
+                                                <p class="reviews__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                                            </li>
+                                        </ul>
+
+                                        <form action="#" class="form">
+                                            <input type="text" class="form__input" placeholder="Title">
+                                            <textarea class="form__textarea" placeholder="Review"></textarea>
+                                            <div class="form__slider">
+                                                <div class="form__slider-rating" id="slider__rating"></div>
+                                                <div class="form__slider-value" id="form__slider-value"></div>
+                                            </div>
+                                            <button type="button" class="form__btn">Send</button>
+                                        </form>
+                                    </div>
+                                </div>*@
+                            <!-- end reviews -->
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-4" role="tabpanel" aria-labelledby="4-tab">
+                        <!-- project poster galalry -->
+                        <div class="gallery" id="my-gallery" itemscope>
+                            <div class="row row--grid">
+
+                                @if (Model.PosterImages.Count > 0)
+                                {
+                                    @foreach (var image in Model.PosterImages.Take(10))
+                                    {
+                                        string imgUrl = $"https://image.tmdb.org/t/p/original{image.file_path}";
+                                        string resolotion = $"{image.width}x{image.height}";
+
+                                        <!-- gallery item -->
+                                        <figure class="col-12 col-sm-6 col-xl-4" itemprop="associatedMedia" itemscope>
+                                            <a href="@imgUrl" itemprop="contentUrl" data-size="@resolotion">
+                                                <img src="@imgUrl" itemprop="thumbnail" alt="Image description" />
+                                            </a>
+                                            <figcaption itemprop="caption description">Some image caption 1</figcaption>
+                                        </figure>
+                                        <!-- end gallery item -->
+                                    }
+                                }
+                                else
+                                {
+                                    <p>No Found  Posters</p>
+                                }
+
+                            </div>
+                        </div>
+                        <!-- end project gallery -->
+                    </div>
+                </div>
+                <!-- end content tabs -->
+            </div>
+
+            <!-- sidebar -->
+            <div class="col-12 col-lg-4 col-xl-4">
+                <div class="row row--grid">
+                    <!-- section title -->
+                    <div class="col-12">
+                        <h2 class="section__title section__title--sidebar">You may also like...</h2>
+                    </div>
+                    <!-- end section title -->
+
+                    @if (Model.MoviesSimilar != null)
+                    {
+                        foreach (var movie in Model.MoviesSimilar.Take(8))
+                        {
+                            string posterUrlSmiliar = "https://media.themoviedb.org/t/p/w300_and_h450_bestv2" + movie.poster_path;
+
+                            <!-- card -->
+                            <div class="col-6 col-sm-4 col-lg-6">
+                                <div class="card">
+                                    <div class="card__cover">
+                                        <img src="@posterUrlSmiliar" alt="">
+                                        <a asp-controller="Movie" asp-action="Detail" asp-route-id="@movie.id" class="card__play">
+                                            <i class="icon ion-ios-link"></i>
+                                        </a>
+                                        <span class="card__rate card__rate--green">@movie.vote_average.ToString("N1")</span>
+                                    </div>
+                                    <div class="card__content">
+                                        <h3 class="card__title"><a asp-controller="Movie" asp-action="Detail" asp-route-id="@movie.id">@movie.title</a></h3>
+                                        <span class="card__category">
+                                            <a href="#">Action</a>
+                                            <a href="#">Triler</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end card -->
+                        }
+                    }
+                    else
+                    {
+                        <p class="comments__text">No smiler movie founded</p>
+                    }
+
+
+                </div>
+            </div>
+            <!-- end sidebar -->
+        </div>
+    </div>
+
+    <!-- for images galery -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close"></button>
+                    <button class="pswp__button pswp__button--share"></button>
+                    <button class="pswp__button pswp__button--fs"></button>
+                    <button class="pswp__button pswp__button--zoom"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+                <button class="pswp__button pswp__button--arrow--left"></button>
+                <button class="pswp__button pswp__button--arrow--right"></button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal edit -->
+    <div id="modal-edit-skill" class="zoom-anim-dialog mfp-hide modal">
+        <h6 style="float: left; margin-left: 10px;" class="modal__title">add to  list</h6>
+
+        <div class="col-md-12">
+
+            <div id="noListArea">
+                <button id="createNewListBtn" style="border: 2px solid #29b474;" class="card__trailer opening_modal_vote open-modalCustom"> Create New List</button>
+            </div>
+
+            <div id="ListArea">
+            </div>
+
+
+        </div>
+        <div id="edit-skill-error">
+            <div class="addMovieSpinner d-none" style="width: 30px; margin-left: 20px; margin-top: 10px; ">
+                <img src="https://i.gifer.com/ZKZg.gif" alt="Loading..." style="width: 100%;">
+            </div>
+        </div>
+
+        <div class="modal__btns">
+            <button id="closeBtn" class="modal__btn modal__btn--dismiss skillDissmisClick" type="button">Close</button>
+        </div>
+    </div>
+    <!-- end modal edit -->
+</section>
+
+
+<!-- end content -->
+
+@section Scripts {
+
+    <script>
+        var movieId = "@Model.MovieDetail.id";
+        var canAdd = "@User.Identity.IsAuthenticated".toLowerCase() == "true";
+    </script>
+
+    <script>
+    $(document).ready(function () {
+    if (!canAdd) {
+        $('body').on('click', '.opening_modal_vote', function () {
+            MyToast.fire({
+                icon: 'error',
+                title: "Please log in for adding to list"
+            });
+        });
+    } else {
+        const userId = "@userId";
+
+        // Magnific Popup yapılandırması
+        $('.open-modalCustom').magnificPopup({
+            fixedContentPos: true,
+            fixedBgPos: true,
+            overflowY: 'auto',
+            type: 'inline',
+            preloader: false,
+            focus: '#username',
+            modal: false,
+            removalDelay: 300,
+            mainClass: 'my-mfp-zoom-in',
+        });
+
+        $('body').on('click', '.opening_modal_vote', function () {
+            $.ajax({
+                type: 'POST',
+                url: '/Movie/GetUserMovieLists',
+                dataType: 'json',
+                data: { userId: userId },
+                success: function (res) {
+                    console.log(res);
+
+                    if (res.length > 0) {
+                        $('#ListArea').empty();
+                        $('#ListArea').append("<h3 style='float:left; margin-top:10px;' class='modal__title'>Your Lists</h3>")
+                        $.each(res, function (index, item) {
+
+                            $('#ListArea').append("<button id='addToListBtn' onClick='addToList(this," + item.id + "," + movieId + ")' class='card__trailer opening_modal_vote open-modalCustom addToListBtn'><i class='icon ion ion-md-add-circle'></i> " + item.listName + "</button>");
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("error: ", error);
+                }
+            });
+        });
+    }
+        });
+
+        $('#createNewListBtn').on('click', function () {
+            window.location.href = '/MovieList/CreateList';
+        });
+
+        function addToList(btn,listId, movieId) {
+            $('.addMovieSpinner').addClass('d-block');
+            $('.addMovieSpinner').removeClass('d-none');
+            $(btn).attr('disabled', true);
+
+            $.ajax({
+                url: '/MovieList/AddMovieToList',
+                method: 'POST',
+                data: { movieId: movieId, listId: listId },
+                success: function (response) {
+
+                    if (response.isValid) {
+                        MyToast.fire({
+                            icon: 'success',
+                            title: response.successMessage
+                        });
+                    } else {
+                        MyToast.fire({
+                            icon: 'error',
+                            title: response.errorMessage
+                        });
+                    }
+
+
+
+                    $('.addMovieSpinner').addClass('d-none');
+                    $('.addMovieSpinner').removeClass('d-block');
+                    $(btn).attr('disabled', false);
+                },
+                error: function (xhr, status, error) {
+                    $('.addMovieSpinner').addClass('d-none');
+                    $('.addMovieSpinner').removeClass('d-block');
+                    $(btn).attr('disabled', false);
+                }
+            });
+        }
+
+    </script>
+}

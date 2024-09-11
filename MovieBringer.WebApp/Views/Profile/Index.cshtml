@@ -1,0 +1,601 @@
+﻿@model MovieBringer.Core.Models.ViewModel.Profile.ProfileViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+</style>
+
+<!-- page title -->
+<section class="section section--first section--bg" data-bg="img/section/section.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section__wrap">
+                    <!-- section title -->
+                    <h2 class="section__title">My Profile</h2>
+                    <!-- end section title -->
+                    <!-- breadcrumb -->
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb__item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb__item breadcrumb__item--active">Profile</li>
+                    </ul>
+                    <!-- end breadcrumb -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end page title -->
+<!-- content -->
+<div class="content content--profile">
+    <!-- profile -->
+    <div class="profile">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="profile__content">
+                        <div class="profile__user">
+                            <div class="profile__avatar">
+                                <img src="img/user.svg" alt="">
+                            </div>
+                            <div class="profile__meta">
+                                <h3>@Model.UserName</h3>
+                                <span>@Model.Email</span>
+                            </div>
+                        </div>
+
+                        <!-- content tabs nav -->
+                        <ul class="nav nav-tabs content__tabs content__tabs--profile" id="content__tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">Profile</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">Settings</a>
+                            </li>
+                        </ul>
+                        <!-- end content tabs nav -->
+                        <!-- content mobile tabs nav -->
+                        <div class="content__mobile-tabs content__mobile-tabs--profile" id="content__mobile-tabs">
+                            <div class="content__mobile-tabs-btn dropdown-toggle" role="navigation" id="mobile-tabs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <input type="button" value="Profile">
+                                <span></span>
+                            </div>
+
+                            <div class="content__mobile-tabs-menu dropdown-menu" aria-labelledby="mobile-tabs">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li class="nav-item"><a class="nav-link active" id="1-tab" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">Profile</a></li>
+
+                                    <li class="nav-item"><a class="nav-link" id="2-tab" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">Settings</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- end content mobile tabs nav -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end profile -->
+
+    <div class="container">
+        <!-- content tabs -->
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab">
+                <div class="row row--grid">
+                    <!-- stats list -->
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="stats">
+                            <span>Your List Count</span>
+                            <p><a href="#">@(Model.MovieLists != null ? Model.MovieLists.Count : 0)</a></p>
+                            <i class="icon ion-ios-film"></i>
+                        </div>
+                    </div>
+                    <!-- end stats -->
+                    <!-- stats -->
+                    @*<div class="col-12 col-sm-6 col-xl-3">
+                            <div class="stats">
+                                <span>Rank(Soon)</span>
+                                <p><a href="#">200</a></p>
+                                <i class="icon ion-ios-film"></i>
+                            </div>
+                        </div>*@
+                    <!-- end stats -->
+                    <!-- stats -->
+                    @*<div class="col-12 col-sm-6 col-xl-3">
+                            <div class="stats">
+                                <span>Your comments(Soon)</span>
+                                <p><a href="#">2 573</a></p>
+                                <i class="icon ion-ios-chatbubbles"></i>
+                            </div>
+                        </div>*@
+                    <!-- end stats -->
+                    <!-- stats -->
+                    @*<div class="col-12 col-sm-6 col-xl-3">
+                            <div class="stats">
+                                <span>Your reviews(Soon)</span>
+                                <p><a href="#">1 021</a></p>
+                                <i class="icon ion-ios-star-half"></i>
+                            </div>
+                        </div>*@
+                    <!-- end stats -->
+                    <!-- dashbox -->
+                    <div class="col-12 ">
+                        <div class="dashbox">
+                            <div class="dashbox__title">
+                                <h3><i class="icon ion-ios-film"></i> Your Lists</h3>
+
+                                <div class="dashbox__wrap">
+                                    @*<a class="dashbox__refresh" href="#"><i class="icon ion-ios-refresh"></i></a>*@
+                                    <a asp-controller="MovieList" asp-action="CreateList" style="width: auto;padding:10px" class="dashbox__more ali">Create New List</a>
+                                </div>
+                            </div>
+
+                            <div class="dashbox__table-wrap">
+                                <table class="main__table main__table--dash">
+                                    <thead>
+                                        <tr>
+                                            <th>TITLE</th>
+                                            <th>CATEGORY</th>
+                                            <th>RATING</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.MovieLists != null && Model.MovieLists.Count > 0)
+                                        {
+                                            foreach (var list in Model.MovieLists)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="main__table-text"><a asp-controller="MovieList" asp-action="EditList" asp-route-listId="@list.Id">@list.ListName</a></div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="main__table-text">Movie</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> @list.ListRank</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="main__table-btns">
+                                                            <a class="main__table-btn main__table-btn--edit" asp-controller="MovieList" asp-action="EditList" asp-route-listId="@list.Id">
+                                                                <i class="icon ion-ios-create "></i>
+                                                            </a>
+                                                            <a href="#modal-list-delete" id="@list.Id" class="main__table-btn main__table-btn--delete opening_modal_delete open-modal">
+                                                                <i class="icon ion-ios-trash"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="main__table-text"><a href="#">You don't have a list yet</a></div>
+                                                </td>
+
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end dashbox -->
+                    <!-- dashbox -->
+                    @*<div class="col-12 col-xl-6">
+                            <div class="dashbox">
+                                <div class="dashbox__title">
+                                    <h3><i class="icon ion-ios-star-half"></i> Latest reviews(Soon)</h3>
+
+                                    <div class="dashbox__wrap">
+                                        <a class="dashbox__refresh" href="#"><i class="icon ion-ios-refresh"></i></a>
+                                        <a class="dashbox__more" href="#">View All</a>
+                                    </div>
+                                </div>
+
+                                <div class="dashbox__table-wrap">
+                                    <table class="main__table main__table--dash">
+                                        <thead>
+                                            <tr>
+                                                <th>ITEM</th>
+                                                <th>AUTHOR</th>
+                                                <th>RATING</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="main__table-text"><a href="#">I Dream in Another Language</a></div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text">John Doe</div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 7.2</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="main__table-text"><a href="#">Benched</a></div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text">John Doe</div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 6.3</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="main__table-text"><a href="#">Whitney</a></div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text">John Doe</div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 8.4</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="main__table-text"><a href="#">Blindspotting</a></div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text">John Doe</div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 9.0</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="main__table-text"><a href="#">I Dream in Another Language</a></div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text">John Doe</div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 7.7</div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>*@
+                    <!-- end dashbox -->
+                    <!-- dashbox -->
+                    @*<div class="col-12 col-xl-6">
+                            <div class="dashbox">
+                                <div class="dashbox__title">
+                                    <h3><i class="icon ion-ios-star-half"></i> Latest reviews(Soon)</h3>
+
+                                    <div class="dashbox__wrap">
+                                        <a class="dashbox__refresh" href="#"><i class="icon ion-ios-refresh"></i></a>
+                                        <a class="dashbox__more" href="#">View All</a>
+                                    </div>
+                                </div>
+
+                                <div class="dashbox__table-wrap">
+                                    <table class="main__table main__table--dash">
+                                        <thead>
+                                            <tr>
+                                                <th>ITEM</th>
+                                                <th>AUTHOR</th>
+                                                <th>RATING</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="main__table-text"><a href="#">I Dream in Another Language</a></div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text">John Doe</div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 7.2</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="main__table-text"><a href="#">Benched</a></div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text">John Doe</div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 6.3</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="main__table-text"><a href="#">Whitney</a></div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text">John Doe</div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 8.4</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="main__table-text"><a href="#">Blindspotting</a></div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text">John Doe</div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 9.0</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="main__table-text"><a href="#">I Dream in Another Language</a></div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text">John Doe</div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 7.7</div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>*@
+                    <!-- end dashbox -->
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="2-tab">
+                <div class="row">
+                    <!-- details form -->
+                    <div class="col-12 col-lg-6">
+                        <form id="profileDetail" action="#" class="form form--profile">
+                            <div class="row row--form">
+                                <div class="col-12">
+                                    <h4 class="form__title">Profile details</h4>
+                                    <div id="proile-error" class="ml-3"></div>
+                                </div>
+
+                                <input id="Id" type="hidden" name="Id" class="form__input" value="@Model.Id">
+
+                                <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                                    <div class="form__group">
+                                        <label class="form__label" for="username">Username</label>
+                                        <input id="UserName" type="text" name="UserName" class="form__input" value="@Model.UserName">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                                    <div class="form__group">
+                                        <label class="form__label" for="email">Email</label>
+                                        <input id="Email" type="text" name="Email" class="form__input" value="@Model.Email">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                                    <div class="form__group">
+                                        <label class="form__label" for="firstname">First Name</label>
+                                        <input id="Name" type="text" name="Name" class="form__input" value="@Model.Name">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                                    <div class="form__group">
+                                        <label class="form__label" for="lastname">Last Name</label>
+                                        <input id="Surname" type="text" name="Surname" class="form__input" value="@Model.Surname">
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-12">
+                                    <button id="submitProfileBtn" class="form__btn" type="button">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- end details form -->
+                    <!-- password form -->
+                    <div class="col-12 col-lg-6">
+                        <form id="changePasswordForm" class="form form--profile">
+                            <div class="row row--form">
+                                <div class="col-12">
+                                    <h4 class="form__title">Change password</h4>
+                                    <div id="change-password-error" class="ml-3"></div>
+                                </div>
+                                <input id="Id" type="hidden" name="Id" class="form__input" value="@Model.Id">
+                                <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                                    <div class="form__group">
+                                        <label class="form__label" for="oldpass">Old password</label>
+                                        <input id="OldPassword" type="password" name="OldPassword" class="form__input">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                                    <div class="form__group">
+                                        <label class="form__label" for="newpass">New password</label>
+                                        <input id="NewPassword" type="password" name="NewPassword" class="form__input">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                                    <div class="form__group">
+                                        <label class="form__label" for="confirmpass">Confirm new password</label>
+                                        <input id="NewPasswordConfirm" type="password" name="NewPasswordConfirm" class="form__input">
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button id="changePasBtn" class="form__btn" type="button">Change</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- end password form -->
+                </div>
+            </div>
+        </div>
+        <!-- end content tabs -->
+    </div>
+</div>
+<!-- end content -->
+<!-- modal list delete -->
+<div id="modal-list-delete" class="zoom-anim-dialog mfp-hide modal">
+    <h6 class="modal__title">List delete</h6>
+    <div id="delete-exp-error">
+    </div>
+    <p class="modal__text">Are you sure to permanently delete this list?All movies you aded will gonan deleted!</p>
+
+    <div class="modal__btns">
+        <button id="listDeleteAccept" class="modal__btn modal__btn--apply" type="button">Delete</button>
+        <button class="modal__btn modal__btn--dismiss skillDissmisClick" type="button">Dismiss</button>
+    </div>
+</div>
+<!-- end modal list delete -->
+
+@section Scripts {
+
+
+
+    @*<script src="profile-index-bundle"></script>*@
+
+    @*<environment names="Development">
+        <script src="profile-index-bundle" debug="false"></script>
+    </environment>
+
+    <environment names="Production">
+        <script src="profile-index-bundle"></script>
+    </environment>*@
+
+<script>
+    $(document).ready(function () {
+        $('body').on('click', '.opening_modal_delete', function () {
+            let id = this.id;
+            $("#listDeleteAccept").click(function () {
+                DeleteList(id)
+            });
+        });
+    });
+
+    function DeleteList(listId) {
+        event.preventDefault();
+
+
+        $.ajax({
+            url: '/MovieList/DeleteList',
+            type: 'POST',
+            dataType: 'json',
+            data: { listId: listId },
+            success: function (response) {
+
+                if (response.isValid) {
+
+                    MyToast.fire({
+                        icon: 'success',
+                        title: response.message
+                    }).then(function () {
+                        location.href = '/Profile';
+                    })
+
+                } else {
+                    //alert("error")
+                    //toast error
+                }
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
+
+    $("#submitProfileBtn").click(function (event) {
+
+        $("#submitProfileBtn").text("Saving...");
+        $("#submitProfileBtn").addClass("btnDisabled");
+
+        var formData = $("#profileDetail").serialize();
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/Profile/UpdateProfile',
+            dataType: 'json',
+            data: formData,
+            success: function (res) {
+                if (!res.isValid) {
+                    $('#proile-error').empty();
+                    $.each(res.errorMessages, function (key, value) {
+                        $("#proile-error").append("<span class='model-danger mt-3'>" + value + '</span><br/>');
+                    });
+
+                    $("#submitProfileBtn").text("Save");
+                    $("#submitProfileBtn").removeClass("btnDisabled");
+
+                } else {
+
+                    MyToast.fire({
+                        icon: 'success',
+                        title: res.successMessage
+                    }).then(function () {
+                        location.reload();
+                    })
+                }
+            }
+        });
+        return false;
+
+    });
+
+    $("#changePasBtn").click(function (event) {
+
+        $("#changePasBtn").text("Changing...");
+        $("#changePasBtn").addClass("btnDisabled");
+
+        var formData = $("#changePasswordForm").serialize();
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/Profile/ChangePassword',
+            dataType: 'json',
+            data: formData,
+            success: function (res) {
+                if (!res.isValid) {
+                    $('#change-password-error').empty();
+                    console.log(res.errorMessages);
+                    $.each(res.errorMessages, function (key, value) {
+                        $("#change-password-error").append("<span class='model-danger mt-3'>" + value + '</span><br/>');
+                    });
+
+                    $("#changePasBtn").text("Save");
+                    $("#changePasBtn").removeClass("btnDisabled");
+
+                } else {
+
+                    MyToast.fire({
+                        icon: 'success',
+                        title: res.successMessage
+                    }).then(function () {
+                        location.reload();
+                    })
+                }
+            }
+        });
+        return false;
+
+    });
+</script>
+}
+
+
+

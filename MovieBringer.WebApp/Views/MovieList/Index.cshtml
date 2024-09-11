@@ -1,0 +1,389 @@
+﻿
+@model List<MovieBringer.Core.Models.MovieModels.MovieListDetailModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int movieCount = 0;
+    int addToDummy = 0;
+}
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+    .modal {
+        max-width: 630px;
+    }
+
+    .mfp-content {
+        width: 700px;
+    }
+
+    div.stars {
+        width: 100%;
+        display: inline-block;
+    }
+
+    .mt-200 {
+        margin-top: 200px;
+    }
+
+    input.star {
+        display: none;
+    }
+
+
+
+    label.star {
+        float: right;
+        padding: 10px;
+        font-size: 36px;
+        color: #4A148C;
+        transition: all .2s;
+    }
+
+
+
+    input.star:checked ~ label.star:before {
+        content: '\f005';
+        color: #FD4;
+        transition: all .25s;
+    }
+
+
+    input.star-5:checked ~ label.star:before {
+        color: #FE7;
+        text-shadow: 0 0 20px #952;
+    }
+
+
+
+    input.star-1:checked ~ label.star:before {
+        color: #F62;
+    }
+
+
+
+    label.star:hover {
+        transform: rotate(-15deg) scale(1.3);
+    }
+
+
+
+    label.star:before {
+        content: '\f006';
+        font-family: FontAwesome;
+    }
+</style>
+
+<section class="section section--border">
+    <div class="container">
+        @if (Model.Count > 0)
+        {
+
+            <h1 class="home__title mt-5">All Lists</h1>
+        }
+        else
+        {
+            <h1 class="home__title mt-5">No List Found</h1>
+        }
+
+        @foreach (var list in Model)
+        {
+            if (list.MoviesInlist != null)
+            {
+                movieCount = list.MoviesInlist.Count();
+                addToDummy = 0;
+
+                if (movieCount < 6)
+                    addToDummy = 6 - movieCount;
+
+            }
+
+            <div class="row">
+
+                <!-- section title -->
+                <div class="col-12 mt-5">
+                    <div class="section__title-wrap">
+                        <h2 class="section__title">@list.ListName <span class="how__text ml-3">added by <a class="main-color" asp-controller="Profile" asp-action="UserProfile" asp-route-userId="@list.MovieListOwnerId"> @list.MovieListOwner</a></span> <span class="how__text ml-3"><i class="icon ion-ios-star-outline"></i> : <a class="main-color" href="#"> @list.MovieListRank</a></span> <span class="how__text ml-3"><a href="#modal-edit-skill" listId="@list.MovieListId" listOwnerId="@list.MovieListOwnerId" class="main-color opening_modal_vote open-modalCustom"> vote the list</a></span> </h2>
+
+                        <div class="section__nav-wrap">
+
+
+                            @if (movieCount >= 6)
+                            {
+                                <a asp-controller="MovieList" asp-action="ListDetail" asp-route-listId="@list.MovieListId" class="section__view">View Detail</a>
+                            }
+
+                            @if (movieCount > 6)
+                            {
+                                <button class="section__nav section__nav--prev" type="button" data-nav="#carousel_@list.MovieListId">
+                                    <i class="icon ion-ios-arrow-back"></i>
+                                </button>
+
+                                <button class="section__nav section__nav--next" type="button" data-nav="#carousel_@list.MovieListId">
+                                    <i class="icon ion-ios-arrow-forward"></i>
+                                </button>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end section title -->
+                <!-- carousel -->
+                <div class="col-12">
+                    <div class="owl-carousel section__carousel" id="carousel_@list.MovieListId">
+
+
+
+                        @foreach (var movie in list.MoviesInlist)
+                        {
+
+
+                            <div class="card">
+
+                                @{string url = "https://media.themoviedb.org/t/p/w300_and_h450_bestv2" + movie.poster_path;
+                                }
+                                <div class="card__cover">
+                                    <img src=@url alt="">
+                                    <a asp-controller="Movie" asp-action="Detail" asp-route-id="@movie.id" class="card__play">
+                                        <i class="icon ion-ios-link"></i>
+                                    </a>
+                                    <span class="card__rate card__rate--green">@movie.vote_average.ToString("N1")</span>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a asp-controller="Movie" asp-action="Detail" asp-route-id="@movie.id">@movie.title</a></h3>
+                                    <span class="card__category">
+                                        <a href="#"></a>
+                                    </span>
+                                </div>
+                            </div>
+
+                        }
+                        @if (movieCount < 6)
+                        {
+                            <div style="margin-top:130px;">
+                                <a asp-controller="MovieList" asp-action="ListDetail" asp-route-listId="@list.MovieListId" class="section__view">View Detail</a>
+                            </div>
+
+                        }
+
+
+                        @{
+                            if (addToDummy > 0)
+                            {
+                                for (int i = 0; i < addToDummy; i++)
+                                {
+                                    <div class="card">
+                                        <div class="card__cover">
+                                            <img src="" alt="">
+                                            <a href="details.html" class="card__play">
+                                                <i class="icon ion-ios-play"></i>
+                                            </a>
+                                            <span class="card__rate card__rate--green">8.4</span>
+                                        </div>
+                                        <div class="card__content">
+                                            <h3 class="card__title"><a href="details.html"></a></h3>
+                                            <span class="card__category">
+
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+                <!-- carousel -->
+            </div>
+        }
+    </div>
+</section>
+
+<!-- modal edit -->
+<div id="modal-edit-skill" class="zoom-anim-dialog mfp-hide modal">
+    <h6 class="modal__title">vote the list</h6>
+
+    <div class="col-md-12">
+
+        <div id="alreadyVotedArea" class="d-none">
+            <h6 class="modal__title mt-5">you already vote this list</h6>
+        </div>
+
+        <div id="voteArea" class="d-none">
+            <div class="stars">
+                <form action="">
+                    <input class="star star-10" id="star-10" type="radio" data="10" name="star" />
+
+                    <label class="star star-10" for="star-10"></label>
+
+                    <input class="star star-9" id="star-9" type="radio" data="9" name="star" />
+
+                    <label class="star star-9" for="star-9"></label>
+
+                    <input class="star star-8" id="star-8" type="radio" data="8" name="star" />
+
+                    <label class="star star-8" for="star-8"></label>
+
+                    <input class="star star-7" id="star-7" type="radio" data="7" name="star" />
+
+                    <label class="star star-7" for="star-7"></label>
+
+                    <input class="star star-6" id="star-6" type="radio" data="6" name="star" />
+
+                    <label class="star star-6" for="star-6"></label>
+
+
+                    <input class="star star-5" id="star-5" type="radio" data="5" name="star" />
+
+                    <label class="star star-5" for="star-5"></label>
+
+                    <input class="star star-4" id="star-4" type="radio" data="4" name="star" />
+
+                    <label class="star star-4" for="star-4"></label>
+
+                    <input class="star star-3" id="star-3" type="radio" data="3" name="star" />
+
+                    <label class="star star-3" for="star-3"></label>
+
+                    <input class="star star-2" id="star-2" data="2" type="radio" name="star" />
+
+                    <label class="star star-2" for="star-2"></label>
+
+                    <input class="star star-1" id="star-1" data="1" type="radio" name="star" />
+
+                    <label class="star star-1" for="star-1"></label>
+                </form>
+            </div>
+        </div>
+
+        
+    </div>
+    <div id="edit-skill-error">
+    </div>
+    <span class="d-none" id="spinner">
+        <img style="width:20px" src="~/loading_gif.webp" />
+    </span>
+    <div class="modal__btns">
+        <button id="voteSave" class="modal__btn modal__btn--apply d-none" type="button">Save</button>
+        <button id="voteSaveAgain" class="modal__btn modal__btn--apply d-none" type="button">Vote Again</button>
+        <button id="voteDismiss" class="modal__btn modal__btn--dismiss skillDissmisClick" type="button">Dismiss</button>
+    </div>
+</div>
+<!-- end modal edit -->
+@section Scripts {
+
+    <script>
+        var voterId = "@ViewBag.UserId";
+        var votable = "@User.Identity.IsAuthenticated".toLowerCase() == "true";
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+
+            if (!votable) {
+                $('body').on('click', '.opening_modal_vote', function () {
+                    MyToast.fire({
+                        icon: 'error',
+                        title: "Please log in to vote."
+                    })
+                });
+
+            } else {
+
+                $('.open-modalCustom').magnificPopup({
+                    fixedContentPos: true,
+                    fixedBgPos: true,
+                    overflowY: 'auto',
+                    type: 'inline',
+                    preloader: false,
+                    focus: '#username',
+                    modal: false,
+                    removalDelay: 300,
+                    mainClass: 'my-mfp-zoom-in',
+                });
+
+                let rank = 0;
+                let listId;
+
+                $('body').on('click', '.opening_modal_vote', function () {
+
+                    listId = $(this).attr('listId');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/MovieList/VoteCheck',
+                        dataType: 'json',
+                        data: { voteValue: rank, listId: listId, voteOwnerId: voterId },
+                        success: function (res) {
+                            console.log(res)
+                            if (!res.isValid) {
+                                //false ise daha önceden vote-oylanmamış ise
+
+                                $("#voteSave").removeClass("d-none");
+                                $("#voteArea").removeClass("d-none");
+                                $("#voteSaveAgain").addClass("d-none");
+                                $("#alreadyVotedArea").addClass("d-none");
+
+                            } else {
+
+                                $("#voteSave").addClass("d-none");
+                                $("#voteArea").addClass("d-none");
+                                $("#voteSaveAgain").removeClass("d-none");
+                                $("#alreadyVotedArea").removeClass("d-none");
+                            }
+                        }
+                    });
+
+                });
+
+                $("#voteSave").click(function () {
+
+                    $("#voteSave").text("Saving...");
+                    $("#voteSave").addClass("btnDisabled");
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/MovieList/VoteList',
+                        dataType: 'json',
+                        data: { voteValue: rank, listId: listId, voteOwnerId: voterId },
+                        success: function (res) {
+                            if (!res.isValid) {
+                                MyToast.fire({
+                                    icon: 'danger',
+                                    title: res.errorMessages[0]
+                                })
+
+                            } else {
+                                $("#voteSave").text("Save");
+                                $("#voteSave").removeClass("btnDisabled");
+                                $(".skillDissmisClick").click();
+                                MyToast.fire({
+                                    icon: 'success',
+                                    title: res.successMessage
+                                })
+                            }
+                        }
+                    });
+                });
+
+                $("#voteSaveAgain").click(function () {
+                    $("#voteArea").removeClass("d-none");
+                    $("#voteSaveAgain").addClass("d-none");
+                    $("#voteSave").removeClass("d-none");
+                    $("#alreadyVotedArea").addClass("d-none");
+                });
+
+                $('input[name="star"]').click(function () {
+                    var dataValue = $(this).attr('data');
+                    rank = dataValue;
+                });
+            }
+           
+        });
+
+    </script>
+}
+
