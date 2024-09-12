@@ -4,17 +4,16 @@ It is a website where you can create your own movie lists and rate these lists. 
 
 In the project, member transactions and list crud transactions are carried out dynamically in our own database. I obtained the movie information through OMDB API
 
-[Try if live](http://moviedeck.com.tr)
+[Try it live](http://moviedeck.com.tr)
 
 ## Tech Stack 
 
 ### Back End
 - C#
-- ASP.NET Core 
-- .NET -v8
+- ASP.NET Core -v8
 - .NET Core Identity ,JWT Token
 -  Entity Framework Core
--  .Core Web API
+-  .Net Core Web API
 - AutoMapper for object mapping
 - Brevo for email service
 - SMIDGE for bundling
