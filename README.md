@@ -39,5 +39,6 @@ In the project, member transactions and list crud transactions are carried out d
 ---
   Samples 
   
-  ![GitHub Octocat Gif](images/myblog_gif1.gif)
+  ![GitHub Octocat Gif](imagesForReadme/mainScreen1.gif)
+  ![GitHub Octocat Gif](imagesForReadme/ListEditScreen1.gif)
 
