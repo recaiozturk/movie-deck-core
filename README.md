@@ -18,7 +18,6 @@ In the project, member transactions and list crud transactions are carried out d
 - Brevo for email service
 - SMIDGE for bundling
 - OMDB API
-- Clean Architecture
 - UnitOfWok Patern
 - Generic Repository Service Pattern
 
