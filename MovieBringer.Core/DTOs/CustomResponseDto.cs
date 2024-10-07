@@ -1,10 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace MovieBringer.Core.DTOs
 {
@@ -12,20 +6,14 @@ namespace MovieBringer.Core.DTOs
     {
         public T Data { get; set; }
 
-
-        //status code cliente oto gidiyor sade biz kullanammız için cliente giderken ignore ettik
         [JsonIgnore]
         public int StatusCode { get; set; }
 
-
         public List<String> Errors { get; set; }
-
         public string Message { get; set; }
 
         public bool IsSuccess { get; set; }
 
-
-        //static factory method
         public static CustomResponseDto<T> Success(int statusCode, T data, string successMessage)
         {
             return new CustomResponseDto<T> { IsSuccess = true, StatusCode = statusCode,Message=successMessage,Data=data };

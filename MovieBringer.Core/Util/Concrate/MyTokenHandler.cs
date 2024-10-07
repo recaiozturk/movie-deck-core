@@ -32,9 +32,7 @@ namespace MovieBringer.Core.Util
                             new Claim(ClaimTypes.Name, user.UserName ?? "")
                         }
                     ),
-                //ne kadar sürecek,1 gün
                 Expires = DateTime.UtcNow.AddHours(1),
-                //şifreleme algoritma secimi
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
                 Issuer = "rozturk"
             };

@@ -10,7 +10,6 @@ using MovieBringer.Service.Services;
 namespace MovieBringer.WebApp.Controllers.api
 {
     [Route("api/[controller]")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class UserController : ControllerBase
     {

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace MovieBringer.Core.Models.MovieModels
+﻿namespace MovieBringer.Core.Models.MovieModels
 {
     public class Root
     {

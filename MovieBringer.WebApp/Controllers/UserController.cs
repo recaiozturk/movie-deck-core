@@ -13,14 +13,5 @@ namespace MovieBringer.WebApp.Controllers
         {
             _apiService = apiService;
         }
-        //test amaclı daha sonra admin için uyarlancak
-        //public async Task<IActionResult> Index()
-        //{
-        //    //test get users
-        //    //var url = $"{"https://localhost:7153"}/api/User";
-        //    //var usersRequest = await _apiService.GetAsync(url);
-        //    //var users = usersRequest.Data;
-        //    //return View();
-        //}
     }
 }

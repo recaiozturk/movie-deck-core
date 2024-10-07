@@ -1,11 +1,4 @@
-﻿using MovieBringer.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MovieBringer.Core.Entities
+﻿namespace MovieBringer.Core.Entities
 {
     public class MovieList:BaseEntity
     {

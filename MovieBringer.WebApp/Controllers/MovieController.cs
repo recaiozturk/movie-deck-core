@@ -87,15 +87,6 @@ namespace MovieBringer.WebApp.Controllers
             var profileModel = await _profileService.GetProfileModel(userId);
 
             return Json(profileModel.MovieLists);
-
-            //burada kaldık listeler geliyor viewe göndercez daha sonrasında en az 1 liste warsa modelce listeletcez
-
-            //if (!ModelState.IsValid)
-            //    return Json(new CustomJsonModel { IsValid = false, ErrorMessages = _methods.ModelErrors(ModelState) });
-
-            //return Json(await _profileService.UpdateProfile(model));
-
-            return Json(1);
         }
     }
 }

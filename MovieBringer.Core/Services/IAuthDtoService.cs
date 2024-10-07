@@ -1,8 +1,6 @@
 ﻿using MovieBringer.Core.DTOs;
 using MovieBringer.Core.Models.ViewModel.Account;
 
-
-
 namespace MovieBringer.Core.Services
 {
     public interface IAuthDtoService

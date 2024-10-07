@@ -8,11 +8,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\js\Views\Profile\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\js\Views\MovieList\CreateList.js" />
+    <Folder Include="wwwroot\js\Views\" />
   </ItemGroup>
 
   <ItemGroup>

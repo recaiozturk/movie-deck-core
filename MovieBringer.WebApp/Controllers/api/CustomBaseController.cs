@@ -8,7 +8,6 @@ namespace MovieBringer.WebApp.Controllers.api
     [ApiController]
     public class CustomBaseController : ControllerBase
     {
-        //her defasında api de return yazmaya gerek kalmaması için,non action endpoint olmamasını saglar
         [NonAction]
         public IActionResult CreateActionResult<T>(CustomResponseDto<T> response)
         {

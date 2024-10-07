@@ -1,5 +1,5 @@
-﻿using MovieBringer.Core.DTOs.UserDTO;
-using MovieBringer.Core.DTOs;
+﻿using MovieBringer.Core.DTOs;
+using MovieBringer.Core.DTOs.UserDTO;
 using MovieBringer.Core.Models.ViewModel.Profile;
 
 namespace MovieBringer.Core.Services

@@ -171,13 +171,8 @@ namespace MovieBringer.WebApp.Controllers
                     var movieListE = JsonConvert.DeserializeObject<MovieList>(jsonData);
                     movieListE = _mapper.Map(modelPost, movieListE);
 
+                    var updateListPostRequest = await _apiService.PutAsync($"{baseUrl}/api/MovieList", movieListE);
 
-                    //apiRequest
-                    //var updateListPostRequest = await _apiService.PutAsync($"{baseUrl}/api/MovieList", movieListE);
-
-                    var updateListPostRequest = await _movieListDtoService.UpdateAsync(movieListE);
-
-                    //formdan gelen modeli güncelledik tekrardan getEdit list gerçekleştiriyoruz
                     var model = _mapper.Map<MovieListViewModel>(movieListE);
 
                     List<MovieListHistory> historyList = new List<MovieListHistory>();

@@ -1,9 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 
-
-
-
 namespace MovieBringer.Core.Models.ViewModel.Profile
 {
     public class ProfileViewModel

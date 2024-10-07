@@ -1,7 +1,7 @@
 ﻿
-using System.Net.Mail;
-using System.Net;
 using MovieBringer.WebApp.Util.Abstract;
+using System.Net;
+using System.Net.Mail;
 
 namespace MovieBringer.Core.Util
 {

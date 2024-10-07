@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MovieBringer.Core.Models.MovieModels
+﻿namespace MovieBringer.Core.Models.MovieModels
 {
     public class ListEditMovieModel
     {
         public string? title { get; set; }
-
         public string? id { get; set; }
         public double vote_average { get; set; }
         public string? release_date { get; set; }

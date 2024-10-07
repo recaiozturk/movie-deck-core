@@ -81,15 +81,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpClient();
 
 
-//builder.Services.AddDbContext<AppDbContext>(x =>
-//{
-//    x.UseSqlServer(builder.Configuration.GetConnectionString("database"), option =>
-//    {
-//        //burda entityframework repository katmanýnda calýstýrmasýný saglýyoruz,migrations islemleri vs
-//        option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name);
-//    });
-//});
-
 //Identity Options
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -187,11 +178,6 @@ app.UseSwaggerUI();
 
 //    //bundle.CreateCss("my-css-bundle", "~/css/site.css", "~/lib/bootstrap/dist/css/bootstrap.css");
 //});
-
-app.UseMySmidge();
-
-//alýnan hatalarý gösterir(sunucuda)
-//app.UseDeveloperExceptionPage();
 
 app.MapControllerRoute(
     name: "default",

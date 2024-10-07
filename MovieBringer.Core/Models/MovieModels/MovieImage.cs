@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MovieBringer.Core.Models.MovieModels
+﻿namespace MovieBringer.Core.Models.MovieModels
 {
     public class MovieImage
     {
-
         public class RootImage
         {
             public Backdrop[] backdrops { get; set; }
