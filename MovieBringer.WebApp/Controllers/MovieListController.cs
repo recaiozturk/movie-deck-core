@@ -172,7 +172,7 @@ namespace MovieBringer.WebApp.Controllers
                     movieListE = _mapper.Map(modelPost, movieListE);
 
 
-                    //apiRequest
+                    //apiRequest s
                     //var updateListPostRequest = await _apiService.PutAsync($"{baseUrl}/api/MovieList", movieListE);
 
                     var updateListPostRequest = await _movieListDtoService.UpdateAsync(movieListE);
