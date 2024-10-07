@@ -41,6 +41,9 @@ builder.Services.AddCors(options =>
     });
 });
 
+//smidge
+builder.Services.AddSmidge(builder.Configuration.GetSection("smidge"));
+
 //service swagger
 builder.Services.AddSwaggerGen(option =>
 {
@@ -147,8 +150,7 @@ builder.Services.AddAutoMapper(typeof(MapProfile));
 
 builder.Services.AddScoped<IMovieService, MovieService>();
 
-//smidge
-builder.Services.AddSmidge(builder.Configuration.GetSection("smidge"));
+
 
 var app = builder.Build();
 

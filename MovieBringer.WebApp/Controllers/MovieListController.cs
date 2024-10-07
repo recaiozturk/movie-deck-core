@@ -172,9 +172,10 @@ namespace MovieBringer.WebApp.Controllers
                     movieListE = _mapper.Map(modelPost, movieListE);
 
 
-                    //apiRequest
+                    //apiRequest (canlida calismiyor simdilik)
                     //var updateListPostRequest = await _apiService.PutAsync($"{baseUrl}/api/MovieList", movieListE);
 
+                    //direk service ile
                     var updateListPostRequest = await _movieListDtoService.UpdateAsync(movieListE);
 
                     //formdan gelen modeli güncelledik tekrardan getEdit list gerçekleştiriyoruz
