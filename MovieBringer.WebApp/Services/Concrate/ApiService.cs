@@ -3,10 +3,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using MovieBringer.Core.DTOs;
 using MovieBringer.WebApp.Services.Abstract;
 using Newtonsoft.Json;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace MovieBringer.WebApp.Services.Concrate
 {
@@ -34,7 +31,6 @@ namespace MovieBringer.WebApp.Services.Concrate
                 var result = JsonConvert.DeserializeObject<CustomResponseDto<object>>(apiResponse);
                 return result;
             }
-
         }
 
         public async Task<CustomResponseDto<NoContent>> DeleteAsync(string url)
@@ -50,14 +46,12 @@ namespace MovieBringer.WebApp.Services.Concrate
                 var result = JsonConvert.DeserializeObject<CustomResponseDto<NoContent>>(apiResponse);
                 return result;
             }
-
         }
 
         public async Task<CustomResponseDto<object>> PostAsync(string apiUrl, object model)
         {
-
-            var accessToken = _httpContextAccessor.HttpContext.Request.Cookies["AccessToken"]; //COntroller base de (api) Request.Cookies["AccessToken"]; direk işliyor,bizimkisi normal controlelr oldugu için bu sekilde kullandık
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);//isteğimize tokenı cookiden cekip ekledik
+            var accessToken = _httpContextAccessor.HttpContext.Request.Cookies["AccessToken"];
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             var response = await _httpClient.PostAsJsonAsync(apiUrl, model);
 

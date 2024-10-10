@@ -7,22 +7,17 @@
 
     if (User.Identity.IsAuthenticated)
     {
-
         @using System.Security.Claims
 
         userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
     }
 
 }
 
-<!-- details -->
 <section class="section section--details section--bg" id="background-section">
 
     @{
         string posterUrl = "https://media.themoviedb.org/t/p/w300_and_h450_bestv2" + Model.MovieDetail.poster_path;
-
-
         string bgUrl = $"https://image.tmdb.org/t/p/original{(Model.BackdropImages.Count > 0 ? Model.BackdropImages[0].file_path : null)}";
 
         <style>
@@ -35,28 +30,21 @@
 
         </style>
     }
-    <!-- details content -->
     <div class="container">
         <div class="row">
-            <!-- title -->
             <div class="col-12">
                 <h1 class="section__title section__title--mb">@Model.MovieDetail.title</h1>
             </div>
-            <!-- end title -->
-            <!-- content -->
             <div class="col-12 col-xl-12">
                 <div class="card card--details">
                     <div class="row">
-                        <!-- card cover -->
                         <div class="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-5">
                             <div class="card__cover" style="max-width:350px !important">
                                 <img src="@posterUrl" alt="">
                                 <span class="card__rate card__rate--green">@Model.MovieDetail.vote_average.ToString("N1")</span>
                             </div>
-                            @*<a href="http://www.youtube.com/watch?v=0O2aH4XLbto" class="card__trailer"><i class="icon ion-ios-play-circle"></i> Watch trailer</a>*@
                         </div>
-                        <!-- end card cover -->
-                        <!-- card content -->
+
                         <div class="col-12 col-md-8 col-lg-9 col-xl-7">
                             <div class="card__content m-detail-content" style="justify-content:flex-start">
                                 <ul class="card__meta">
@@ -108,46 +96,21 @@
 
                                 }
 
-
                             </div>
-
                         </div>
-                        <!-- end card content -->
                     </div>
                 </div>
             </div>
-            <!-- end content -->
-            <!-- player -->
-            <!--<div class="col-12 col-xl-6">
-                <video controls crossorigin playsinline poster="../../cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg" id="player">-->
-            <!-- Video files -->
-            <!--<source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4" size="576">
-            <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4" type="video/mp4" size="720">
-            <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4" type="video/mp4" size="1080">-->
-            <!-- Caption files -->
-            <!--<track kind="captions" label="English" srclang="en" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
-                   default>
-            <track kind="captions" label="Français" srclang="fr" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt">-->
-            <!-- Fallback for browsers that don't support the <video> element -->
-            <!--<a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>
-                </video>
-            </div>-->
-            <!-- end player -->
         </div>
     </div>
-    <!-- end details content -->
+
 </section>
-<!-- end details -->
-<!-- content -->
 <section class="content">
     <div class="content__head">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <!-- content title -->
                     <h2 class="content__title">Discover</h2>
-                    <!-- end content title -->
-                    <!-- content tabs nav -->
                     <ul class="nav nav-tabs content__tabs" id="content__tabs" role="tablist">
 
                         <li class="nav-item">
@@ -166,8 +129,6 @@
                             <a class="nav-link" data-toggle="tab" href="#tab-4" role="tab" aria-controls="tab-4" aria-selected="false">Posters</a>
                         </li>
                     </ul>
-                    <!-- end content tabs nav -->
-                    <!-- content mobile tabs nav -->
                     <div class="content__mobile-tabs" id="content__mobile-tabs">
                         <div class="content__mobile-tabs-btn dropdown-toggle" role="navigation" id="mobile-tabs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <input type="button" value="Comments">
@@ -184,7 +145,6 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- end content mobile tabs nav -->
                 </div>
             </div>
         </div>
@@ -193,11 +153,8 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-8 col-xl-8">
-                <!-- content tabs -->
                 <div class="tab-content">
-
                     <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab">
-                        <!-- project gallery -->
                         <div class="gallery" id="my-gallery" itemscope>
                             <div class="row row--grid">
 
@@ -208,14 +165,12 @@
                                         string imgUrl = $"https://image.tmdb.org/t/p/original{image.file_path}";
                                         string resolotion = $"{image.width}x{image.height}";
 
-                                        <!-- gallery item -->
                                         <figure class="col-12 col-sm-6 col-xl-4" itemprop="associatedMedia" itemscope>
                                             <a href="@imgUrl" itemprop="contentUrl" data-size="@resolotion">
                                                 <img src="@imgUrl" itemprop="thumbnail" alt="Image description" />
                                             </a>
                                             <figcaption itemprop="caption description">Some image caption 1</figcaption>
                                         </figure>
-                                        <!-- end gallery item -->
                                     }
                                 }
                                 else
@@ -225,178 +180,19 @@
 
                             </div>
                         </div>
-                        <!-- end project gallery -->
                     </div>
 
                     <div class="tab-pane fade " id="tab-2" role="tabpanel" aria-labelledby="2-tab">
-                        <div class="row">
-                            <!-- comments -->
-                            @*<div class="col-12">
-                                    <div class="comments">
-                                        <ul class="comments__list">
-                                            <li class="comments__item">
-                                                <div class="comments__autor">
-                                                    <img class="comments__avatar" src="~/Resource/MainHotFlix/img/user.svg" alt="">
-                                                    <span class="comments__name">John Doe</span>
-                                                    <span class="comments__time">30.08.2018, 17:53</span>
-                                                </div>
-                                                <p class="comments__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                                                <div class="comments__actions">
-                                                    <div class="comments__rate">
-                                                        <button type="button"><i class="icon ion-md-thumbs-up"></i>12</button>
-
-                                                        <button type="button">7<i class="icon ion-md-thumbs-down"></i></button>
-                                                    </div>
-
-                                                    <button type="button"><i class="icon ion-ios-share-alt"></i>Reply</button>
-                                                    <button type="button"><i class="icon ion-ios-quote"></i>Quote</button>
-                                                </div>
-                                            </li>
-
-                                            <li class="comments__item comments__item--answer">
-                                                <div class="comments__autor">
-                                                    <img class="comments__avatar" src="~/Resource/MainHotFlix/img/user.svg" alt="">
-                                                    <span class="comments__name">John Doe</span>
-                                                    <span class="comments__time">24.08.2018, 16:41</span>
-                                                </div>
-                                                <p class="comments__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                                <div class="comments__actions">
-                                                    <div class="comments__rate">
-                                                        <button type="button"><i class="icon ion-md-thumbs-up"></i>8</button>
-
-                                                        <button type="button">3<i class="icon ion-md-thumbs-down"></i></button>
-                                                    </div>
-
-                                                    <button type="button"><i class="icon ion-ios-share-alt"></i>Reply</button>
-                                                    <button type="button"><i class="icon ion-ios-quote"></i>Quote</button>
-                                                </div>
-                                            </li>
-
-                                            <li class="comments__item comments__item--quote">
-                                                <div class="comments__autor">
-                                                    <img class="comments__avatar" src="~/Resource/MainHotFlix/img/user.svg" alt="">
-                                                    <span class="comments__name">John Doe</span>
-                                                    <span class="comments__time">11.08.2018, 11:11</span>
-                                                </div>
-                                                <p class="comments__text"><span>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</span>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                                <div class="comments__actions">
-                                                    <div class="comments__rate">
-                                                        <button type="button"><i class="icon ion-md-thumbs-up"></i>11</button>
-
-                                                        <button type="button">1<i class="icon ion-md-thumbs-down"></i></button>
-                                                    </div>
-
-                                                    <button type="button"><i class="icon ion-ios-share-alt"></i>Reply</button>
-                                                    <button type="button"><i class="icon ion-ios-quote"></i>Quote</button>
-                                                </div>
-                                            </li>
-
-                                            <li class="comments__item">
-                                                <div class="comments__autor">
-                                                    <img class="comments__avatar" src="~/Resource/MainHotFlix/img/user.svg" alt="">
-                                                    <span class="comments__name">John Doe</span>
-                                                    <span class="comments__time">07.08.2018, 14:33</span>
-                                                </div>
-                                                <p class="comments__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                                                <div class="comments__actions">
-                                                    <div class="comments__rate">
-                                                        <button type="button"><i class="icon ion-md-thumbs-up"></i>99</button>
-
-                                                        <button type="button">35<i class="icon ion-md-thumbs-down"></i></button>
-                                                    </div>
-
-                                                    <button type="button"><i class="icon ion-ios-share-alt"></i>Reply</button>
-                                                    <button type="button"><i class="icon ion-ios-quote"></i>Quote</button>
-                                                </div>
-                                            </li>
-
-                                            <li class="comments__item">
-                                                <div class="comments__autor">
-                                                    <img class="comments__avatar" src="~/Resource/MainHotFlix/img/user.svg" alt="">
-                                                    <span class="comments__name">John Doe</span>
-                                                    <span class="comments__time">02.08.2018, 15:24</span>
-                                                </div>
-                                                <p class="comments__text">Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
-                                                <div class="comments__actions">
-                                                    <div class="comments__rate">
-                                                        <button type="button"><i class="icon ion-md-thumbs-up"></i>74</button>
-
-                                                        <button type="button">13<i class="icon ion-md-thumbs-down"></i></button>
-                                                    </div>
-
-                                                    <button type="button"><i class="icon ion-ios-share-alt"></i>Reply</button>
-                                                    <button type="button"><i class="icon ion-ios-quote"></i>Quote</button>
-                                                </div>
-                                            </li>
-                                        </ul>
-
-                                        <form action="#" class="form">
-                                            <textarea id="text" name="text" class="form__textarea" placeholder="Add comment"></textarea>
-                                            <button type="button" class="form__btn">Send</button>
-                                        </form>
-                                    </div>
-                                </div>*@
-                            <!-- end comments -->
+                        <div class="row">                           
                         </div>
                     </div>
 
                     <div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="3-tab">
-                        <div class="row">
-                            <!-- reviews -->
-                            @*<div class="col-12">
-                                    <div class="reviews">
-                                        <ul class="reviews__list">
-                                            <li class="reviews__item">
-                                                <div class="reviews__autor">
-                                                    <img class="reviews__avatar" src="~/Resource/MainHotFlix/img/user.svg" alt="">
-                                                    <span class="reviews__name">Best Marvel movie in my opinion</span>
-                                                    <span class="reviews__time">24.08.2018, 17:53 by John Doe</span>
-
-                                                    <span class="reviews__rating reviews__rating--green">8.4</span>
-                                                </div>
-                                                <p class="reviews__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                                            </li>
-
-                                            <li class="reviews__item">
-                                                <div class="reviews__autor">
-                                                    <img class="reviews__avatar" src="~/Resource/MainHotFlix/img/user.svg" alt="">
-                                                    <span class="reviews__name">Best Marvel movie in my opinion</span>
-                                                    <span class="reviews__time">24.08.2018, 17:53 by John Doe</span>
-
-                                                    <span class="reviews__rating reviews__rating--green">9.0</span>
-                                                </div>
-                                                <p class="reviews__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                                            </li>
-
-                                            <li class="reviews__item">
-                                                <div class="reviews__autor">
-                                                    <img class="reviews__avatar" src="~/Resource/MainHotFlix/img/user.svg" alt="">
-                                                    <span class="reviews__name">Best Marvel movie in my opinion</span>
-                                                    <span class="reviews__time">24.08.2018, 17:53 by John Doe</span>
-
-                                                    <span class="reviews__rating reviews__rating--red">5.5</span>
-                                                </div>
-                                                <p class="reviews__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                                            </li>
-                                        </ul>
-
-                                        <form action="#" class="form">
-                                            <input type="text" class="form__input" placeholder="Title">
-                                            <textarea class="form__textarea" placeholder="Review"></textarea>
-                                            <div class="form__slider">
-                                                <div class="form__slider-rating" id="slider__rating"></div>
-                                                <div class="form__slider-value" id="form__slider-value"></div>
-                                            </div>
-                                            <button type="button" class="form__btn">Send</button>
-                                        </form>
-                                    </div>
-                                </div>*@
-                            <!-- end reviews -->
+                        <div class="row">                          
                         </div>
                     </div>
 
                     <div class="tab-pane fade" id="tab-4" role="tabpanel" aria-labelledby="4-tab">
-                        <!-- project poster galalry -->
                         <div class="gallery" id="my-gallery" itemscope>
                             <div class="row row--grid">
 
@@ -407,14 +203,12 @@
                                         string imgUrl = $"https://image.tmdb.org/t/p/original{image.file_path}";
                                         string resolotion = $"{image.width}x{image.height}";
 
-                                        <!-- gallery item -->
                                         <figure class="col-12 col-sm-6 col-xl-4" itemprop="associatedMedia" itemscope>
                                             <a href="@imgUrl" itemprop="contentUrl" data-size="@resolotion">
                                                 <img src="@imgUrl" itemprop="thumbnail" alt="Image description" />
                                             </a>
                                             <figcaption itemprop="caption description">Some image caption 1</figcaption>
                                         </figure>
-                                        <!-- end gallery item -->
                                     }
                                 }
                                 else
@@ -424,20 +218,15 @@
 
                             </div>
                         </div>
-                        <!-- end project gallery -->
                     </div>
                 </div>
-                <!-- end content tabs -->
             </div>
 
-            <!-- sidebar -->
             <div class="col-12 col-lg-4 col-xl-4">
                 <div class="row row--grid">
-                    <!-- section title -->
                     <div class="col-12">
                         <h2 class="section__title section__title--sidebar">You may also like...</h2>
                     </div>
-                    <!-- end section title -->
 
                     @if (Model.MoviesSimilar != null)
                     {
@@ -445,7 +234,6 @@
                         {
                             string posterUrlSmiliar = "https://media.themoviedb.org/t/p/w300_and_h450_bestv2" + movie.poster_path;
 
-                            <!-- card -->
                             <div class="col-6 col-sm-4 col-lg-6">
                                 <div class="card">
                                     <div class="card__cover">
@@ -464,7 +252,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- end card -->
                         }
                     }
                     else
@@ -475,11 +262,8 @@
 
                 </div>
             </div>
-            <!-- end sidebar -->
         </div>
     </div>
-
-    <!-- for images galery -->
     <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="pswp__bg"></div>
         <div class="pswp__scroll-wrap">
@@ -515,7 +299,6 @@
         </div>
     </div>
 
-    <!-- modal edit -->
     <div id="modal-edit-skill" class="zoom-anim-dialog mfp-hide modal">
         <h6 style="float: left; margin-left: 10px;" class="modal__title">add to  list</h6>
 
@@ -540,11 +323,7 @@
             <button id="closeBtn" class="modal__btn modal__btn--dismiss skillDissmisClick" type="button">Close</button>
         </div>
     </div>
-    <!-- end modal edit -->
 </section>
-
-
-<!-- end content -->
 
 @section Scripts {
 
@@ -565,7 +344,6 @@
     } else {
         const userId = "@userId";
 
-        // Magnific Popup yapılandırması
         $('.open-modalCustom').magnificPopup({
             fixedContentPos: true,
             fixedBgPos: true,

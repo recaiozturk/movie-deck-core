@@ -78,7 +78,7 @@ namespace MovieBringer.WebApp.Controllers
                     var cookieOptions = new CookieOptions
                     {
                         HttpOnly = true,
-                        Expires = DateTime.UtcNow.AddHours(1) // Token süresine uygun bir süre secilcek
+                        Expires = DateTime.UtcNow.AddHours(1)
                     };
 
                     var token = loginRequest.Data.ToString();
@@ -117,7 +117,6 @@ namespace MovieBringer.WebApp.Controllers
             return View(model);
         }
 
-        //[HttpPost]
         public async Task<IActionResult> LogOut()
         {
             var logOutrequest = await _apiService.GetAsync($"{_config.GetSection("AppSettings:WebUrl").Value}/api/Auth/log-out");
@@ -178,8 +177,6 @@ namespace MovieBringer.WebApp.Controllers
             return View();
         }
 
-
-        //mail girip apiye şifremi unuttum tokeni için istek gönderiyoruz,api de tokenla birlikte url ulsturup mail atıyor
         [HttpPost]
         public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel model)
         {
@@ -215,7 +212,6 @@ namespace MovieBringer.WebApp.Controllers
             return View(model);
         }
 
-        //yeni şifreyi ve model içindeki tokenı onaylatmak için apiye istek gönderiyoruz
         [HttpPost]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {

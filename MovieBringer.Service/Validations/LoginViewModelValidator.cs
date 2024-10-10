@@ -1,7 +1,5 @@
 ﻿using FluentValidation;
 using MovieBringer.Core.Models.ViewModel.Account;
-using System.Text.RegularExpressions;
-
 
 namespace MovieBringer.Service.Validations
 {

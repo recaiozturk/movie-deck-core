@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using MovieBringer.Core.Entities;
 using MovieBringer.Core.Models.MovieModels;
 using MovieBringer.Core.Services;
-using MovieBringer.Service.Services;
 using MovieBringer.WebApp.Models;
 using MovieBringer.WebApp.Services.Abstract;
 using MovieBringer.WebApp.Util.Abstract;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using static MovieBringer.Core.Models.MovieModels.MovieImage;
 using static MovieBringer.Core.Models.MovieModels.MovieVideo;
 
@@ -35,7 +32,6 @@ namespace MovieBringer.WebApp.Services.Concrate
             _emailSender = emailSender;
         }
 
-        //Edit List için ListEditMovieModel Listesi oluşturur,movi bilgilerini çekeerek
         public async Task<List<ListEditMovieModel>> GetEditListMovies(List<MovieListHistory> historyList)
         {
             List<ListEditMovieModel> listEditMovieModels = new List<ListEditMovieModel>();
@@ -59,8 +55,6 @@ namespace MovieBringer.WebApp.Services.Concrate
             }
             return listEditMovieModels;
         }
-
-        //liste için viewdetail tıklandıgında filmleri alır viewe gönderir
         public async Task<ListDetailViewModel> GetMoviesForListDetail(int listId)
         {
             ListDetailViewModel viewModel= new ListDetailViewModel();
@@ -94,7 +88,6 @@ namespace MovieBringer.WebApp.Services.Concrate
                                 modelMD.MovieDetail = (MovieDetail)movieRequest.Data;
                             else
                                 modelMD.MovieDetail = null;
-
                             //cast
                             var castRequest = await _movieService.GetMovieCast(movieHis.MovieId, _config.GetSection("AppSettings:OMDBToken").Value);
                             if (castRequest.IsSuccess)
@@ -107,9 +100,7 @@ namespace MovieBringer.WebApp.Services.Concrate
                             {
                                 modelMD.Casts = null;
                                 modelMD.Crews = null;
-
                             }
-
                             //movie trailers,videos
                             var videoRequest = await _movieService.GetMovieVideos(movieHis.MovieId, _config.GetSection("AppSettings:OMDBToken").Value);
                             if (videoRequest.IsSuccess)
@@ -129,11 +120,8 @@ namespace MovieBringer.WebApp.Services.Concrate
                                 var data = (RootImage)movieImageRequest.Data;
                                 modelMD.BackdropImages = data.backdrops.ToList();
                             }
-
                             moviesForListDetail.Add(modelMD);
-                        }
-
-                        
+                        }                      
                     }
                 }
                 else
@@ -168,7 +156,6 @@ namespace MovieBringer.WebApp.Services.Concrate
                 };
             }
 
-            //burda gelen movie id ve list id ile movielistHistory de ekleem yapıyoruz
             MovieListHistoryCreateModel model = new MovieListHistoryCreateModel();
             model.MovieId = movieId;
             model.MovieListId = listId;
@@ -220,7 +207,6 @@ namespace MovieBringer.WebApp.Services.Concrate
 
             var deleteListRequest = await _movieListDtoService.DeleteMovieList(listId);
 
-
             if (deleteListRequest.IsSuccess)
             {
                 return new CustomJsonModel { IsValid = true, SuccessMessage = deleteListRequest.Message };
@@ -241,7 +227,6 @@ namespace MovieBringer.WebApp.Services.Concrate
 
             if (deleteHistoryRequest.IsSuccess)
             {
-                //display orderları tekrardan güncelliyoruz ,listeden film silinince hata atması diye
                 var isSync = await SyncDisplayOrder(movieListId);
 
                 if (isSync)
@@ -256,8 +241,6 @@ namespace MovieBringer.WebApp.Services.Concrate
             else
                 return new CustomJsonModel { IsValid = false, ErrorMessages = deleteHistoryRequest.Errors };
         }
-
-        //listeden film silindikten sonra display orderlar için syn işlemi
         public async Task<bool> SyncDisplayOrder(int listId)
         {
             var syncRequest = await _apiService.GetAsync($"{baseUrl}/api/MovieList/sync-display-orders?listId={listId}");
@@ -304,23 +287,6 @@ namespace MovieBringer.WebApp.Services.Concrate
                 model.ListName = list.ListName;
                 model.MovieListOwner = list.ListOwner;
                 model.MovieListOwnerId = list.UserId;
-
-
-                //var listMovieRankRequest = await _apiService.GetAsync($"{baseUrl}/api/MovieList/get-listvote?listId={list.Id}");
-                //if (listMovieRankRequest.IsSuccess)
-                //{
-                //    if (listMovieRankRequest.Data != null)
-                //    {
-                //        var jsonData2 = listMovieRankRequest.Data.ToString();
-                //        model.MovieListRank = JsonConvert.DeserializeObject<double>(jsonData2); ;
-                //    }
-                //    else
-                //    {
-                //        model.MovieListRank = 0;
-                //    }
-
-                //}
-
                 model.MovieListRank = await GetMovieListRank(list.Id);
 
                 List<MovieListHistory> historyList = new List<MovieListHistory>();
@@ -332,18 +298,14 @@ namespace MovieBringer.WebApp.Services.Concrate
                     var jsonData2 = listMovieHistoriesRequest.Data.ToString();
                     var movieListE2 = JsonConvert.DeserializeObject<List<MovieListHistory>>(jsonData2);
                     historyList = movieListE2;
-
                     model.MoviesInlist = await GetEditListMovies(historyList);
-
                     modelLists.Add(model);
-                    //add list...
                 }
                 else
                 {
                     modelLists = null;
                 }
             }
-
             return modelLists;
         }
 
@@ -358,14 +320,11 @@ namespace MovieBringer.WebApp.Services.Concrate
                 return new CustomJsonModel { IsValid = true, SuccessMessage = voteRequest.Message };
             else
                 return new CustomJsonModel { IsValid = false, ErrorMessage = voteRequest.Message };
-
         }
 
         public async Task<CustomJsonModel> CheckMovieListVotable(int voteValue, int listId, string voteOwnerId)
         {
-
             var voteRequest = await _apiService.GetAsync($"{baseUrl}/api/MovieList/vote-check?voteValue={voteValue}&listId={listId}&voteOwnerId={voteOwnerId}");
-
 
             if (voteRequest.IsSuccess)
             {
@@ -392,7 +351,6 @@ namespace MovieBringer.WebApp.Services.Concrate
                 {
                     return 0;
                 }
-
             }
             return 0;
         }

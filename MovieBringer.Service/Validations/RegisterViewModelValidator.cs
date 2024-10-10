@@ -1,7 +1,5 @@
 ﻿using FluentValidation;
 using MovieBringer.Core.Models.ViewModel.Account;
-using System.Text.RegularExpressions;
-
 
 namespace MovieBringer.Service.Validations
 {
@@ -22,13 +20,6 @@ namespace MovieBringer.Service.Validations
                 .Must(password => password.Any(char.IsUpper)).WithMessage("Password must contain at least one uppercase letter")
                 .Must(password => password.Any(char.IsLower)).WithMessage("Password must contain at least one lowercase letter")
                 .Must(password => password.Any(c => !char.IsLetterOrDigit(c))).WithMessage("Password must contain at least one special character");
-
-
-            //RuleFor(x => x.Password).Cascade(CascadeMode.Stop).Cascade(CascadeMode.Stop)
-            //    .Matches("[A-Z]").WithMessage("Password must contain at least one uppercase letter.")
-            //    .Matches("[a-z]").WithMessage("Password must contain at least one lowercase letter.")
-            //    .Matches("[0-9]").WithMessage("Password must contain at least one digit.")
-            //    .Matches("[^a-zA-Z0-9]").WithMessage("Password must contain at least one special character.");
 
             RuleFor(r => r.ConfirmPassword)
                 .Equal(r => r.Password).WithMessage("Confirm Password must match Password");

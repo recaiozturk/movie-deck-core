@@ -34,7 +34,6 @@ namespace MovieBringer.Repository.Repositories
 
         public IQueryable<T> GetAll()
         {
-            //asnotracking ile memoryye almaz ,bosuna o işlemi yaptırmayalım performanslı olsun
             return _dbSet.AsNoTracking().AsQueryable();
         }
 

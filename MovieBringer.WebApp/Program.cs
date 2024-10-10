@@ -1,12 +1,9 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using FormHelper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using MovieBringer.Core.Entities;
-using MovieBringer.Core.Models.ViewModel.Account;
 using MovieBringer.Core.Repositories;
 using MovieBringer.Core.Services;
 using MovieBringer.Core.UnitOfWorks;
@@ -18,13 +15,11 @@ using MovieBringer.Repository.UnitOfWorks;
 using MovieBringer.Service.Mapping;
 using MovieBringer.Service.Services;
 using MovieBringer.Service.Validations;
-using MovieBringer.WebApp.Middlewares;
 using MovieBringer.WebApp.Services.Abstract;
 using MovieBringer.WebApp.Services.Concrate;
 using MovieBringer.WebApp.Util;
 using MovieBringer.WebApp.Util.Abstract;
 using Smidge;
-using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -73,7 +68,6 @@ builder.Services.AddSwaggerGen(option =>
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<RegisterViewModelValidator>();
-
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -135,7 +129,6 @@ new SmtpEmailSender(
 );
 
 builder.Services.AddAutoMapper(typeof(MapProfile));
-
 builder.Services.AddScoped<IMovieService, MovieService>();
 
 //smidge
@@ -147,8 +140,6 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
-
-
 }
 app.UseDeveloperExceptionPage();
 

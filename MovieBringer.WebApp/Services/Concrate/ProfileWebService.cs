@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using MovieBringer.Core.Entities;
 using MovieBringer.Core.Models.ViewModel.Profile;
 using MovieBringer.Core.Services;
@@ -8,7 +7,6 @@ using MovieBringer.WebApp.Models;
 using MovieBringer.WebApp.Services.Abstract;
 using MovieBringer.WebApp.Util.Abstract;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Security.Claims;
 
 namespace MovieBringer.WebApp.Services.Concrate
@@ -79,16 +77,12 @@ namespace MovieBringer.WebApp.Services.Concrate
             {
                 if (updateProfileResult.IsSuccess)
                 {
-                    //degisiklikten sonda oturumu kapat-ac
-                    //mobilde ve ya client app de gerekirse apiye eklenir
                     await _signInManager.SignOutAsync();
 
                     var user = await _userManager.FindByIdAsync(model.Id);
 
-                    //tekrar gir
                     if (user != null)
                     {
-                        //mobilde ve ya client app de gerekirse apiye eklenir
                         await _signInManager.SignInAsync(user, isPersistent: false);
                     }
 

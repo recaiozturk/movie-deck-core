@@ -113,11 +113,9 @@ namespace MovieBringer.WebApp.Controllers
                             ModelState.AddModelError("CustomErrorKey", err);
                         }
                     }
-
                 }
                 else
                     return RedirectToAction("Index", "Home");
-
             }
             return View(model);
         }

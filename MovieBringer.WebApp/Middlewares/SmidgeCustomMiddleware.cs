@@ -19,8 +19,6 @@ namespace MovieBringer.WebApp.Middlewares
                     "~/Resource/MainHotFlix/css/plyr.css",
                     "~/Resource/MainHotFlix/css/photoswipe.css",
                     "~/Resource/MainHotFlix/css/default-skin.css");
-                //bundle.CreateCss("my-css-admin-bundle", "~/Resource/AdminHotFlix/css/select2.min.css");
-
 
                 //views js bundle
                 var viewsJsBundle = CreateViewsJsBundle();
@@ -51,12 +49,10 @@ namespace MovieBringer.WebApp.Middlewares
                     string bundleName = $"{Path.GetFileName(viewDirectory).ToLower()}-{jsFileNameBundle}-bundle";
                     string virtualPath = $"~/js/Views/{Path.GetFileName(viewDirectory)}/{jsFileName}";
 
-                    //Console.WriteLine($"Bundle: {bundleName}, JS File: {virtualPath}");
                     myList.Add(new CreateJsModel { BundleName = bundleName, JsPath = virtualPath });
                   
                 }
             }
-
             return myList;
         }
 

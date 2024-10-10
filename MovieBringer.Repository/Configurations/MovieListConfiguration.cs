@@ -16,9 +16,6 @@ namespace MovieBringer.Repository.Configurations
 
             builder.ToTable("MovieLists"); 
 
-
-
-
         }
     }
 }

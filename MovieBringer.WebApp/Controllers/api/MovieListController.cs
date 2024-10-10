@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MovieBringer.Core.DTOs;
 using MovieBringer.Core.DTOs.MovieListDTO;
 using MovieBringer.Core.DTOs.MovieListHistoryDTO;
 using MovieBringer.Core.Entities;
 using MovieBringer.Core.Models.MovieModels;
 using MovieBringer.Core.Services;
-using MovieBringer.Service.Services;
 
 namespace MovieBringer.WebApp.Controllers.api
 {

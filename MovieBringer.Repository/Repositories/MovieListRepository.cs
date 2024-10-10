@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using MovieBringer.Core.DTOs.UserDTO;
+﻿using Microsoft.EntityFrameworkCore;
 using MovieBringer.Core.Entities;
 using MovieBringer.Core.Repositories;
-using System.Runtime.CompilerServices;
 
 
 namespace MovieBringer.Repository.Repositories
@@ -42,9 +39,6 @@ namespace MovieBringer.Repository.Repositories
             {
                 return 0;
             }
-
-
-
         }
 
         public async Task<int> GetLastAddedListId()
@@ -62,7 +56,6 @@ namespace MovieBringer.Repository.Repositories
                 return 0;
 
         }
-
 
         public async Task<List<MovieList>> GetPublicLists()
         {
@@ -94,9 +87,6 @@ namespace MovieBringer.Repository.Repositories
 
         public async Task<double> GetRankMovieList(int listId)
         {
-            //var test= _context.VoteMovieLists.Where(vm => vm.ListId == listId)
-            //        .Average(vm => vm.ListRank);
-
             var anyRanked = _context.VoteMovieLists.Any(vm => vm.ListId == listId);
 
             if (anyRanked)

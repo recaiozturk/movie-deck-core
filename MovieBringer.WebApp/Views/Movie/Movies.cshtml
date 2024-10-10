@@ -4,43 +4,31 @@
     ViewData["Title"] = "Movies";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-<!-- content -->
 <section class="content">
     <div class="content__head">
         <div class="container">
             <div class="row">
                 <div class="col-12" style="margin-top:70px;">
-                    <!-- content title -->
                     <h2 class="content__title">Movies</h2>
-                    <!-- end content title -->
-                    <!-- content tabs nav -->
                     <ul class="nav nav-tabs content__tabs" id="content__tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">NOW PLAYING</a>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">UPCOMING</a>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">POPULER</a>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#tab-4" role="tab" aria-controls="tab-4" aria-selected="false">TOP RATED</a>
                         </li>
                     </ul>
-                    <!-- end content tabs nav -->
-                    <!-- content mobile tabs nav -->
                     <div class="content__mobile-tabs" id="content__mobile-tabs">
                         <div class="content__mobile-tabs-btn dropdown-toggle" role="navigation" id="mobile-tabs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <input type="button" value="New releases">
                             <span></span>
                         </div>
-
                         <div class="content__mobile-tabs-menu dropdown-menu" aria-labelledby="mobile-tabs">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item"><a class="nav-link active" id="1-tab" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">NOW Playing</a></li>
@@ -53,14 +41,12 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- end content mobile tabs nav -->
                 </div>
             </div>
         </div>
     </div>
 
     <div class="container">
-        <!-- content tabs -->
         <div class="tab-content">
             <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab">
                 <div class="row row--grid">
@@ -69,7 +55,6 @@
                         @foreach (var movie in Model.NowPlayings)
                         {
                             string img = "https://media.themoviedb.org/t/p/w300_and_h450_bestv2" + movie.poster_path;
-                            <!-- card -->
                             <div class="col-6 col-sm-4 col-md-3 col-xl-2">
                                 <div class="card">
                                     <div class="card__cover">
@@ -87,7 +72,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- end card -->
                         }
                     }
                     else
@@ -105,7 +89,6 @@
                         @foreach (var movie in Model.UpComing)
                         {
                             string img = "https://media.themoviedb.org/t/p/w300_and_h450_bestv2" + movie.poster_path;
-                            <!-- card -->
                             <div class="col-6 col-sm-4 col-md-3 col-xl-2">
                                 <div class="card">
                                     <div class="card__cover">
@@ -123,7 +106,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- end card -->
                         }
                     }
                     else
@@ -140,7 +122,6 @@
                         @foreach (var movie in Model.Popular)
                         {
                             string img = "https://media.themoviedb.org/t/p/w300_and_h450_bestv2" + movie.poster_path;
-                            <!-- card -->
                             <div class="col-6 col-sm-4 col-md-3 col-xl-2">
                                 <div class="card">
                                     <div class="card__cover">
@@ -158,7 +139,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- end card -->
                         }
                     }
                     else
@@ -175,7 +155,6 @@
                         @foreach (var movie in Model.TopRated)
                         {
                             string img = "https://media.themoviedb.org/t/p/w300_and_h450_bestv2" + movie.poster_path;
-                            <!-- card -->
                             <div class="col-6 col-sm-4 col-md-3 col-xl-2">
                                 <div class="card">
                                     <div class="card__cover">
@@ -193,7 +172,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- end card -->
                         }
                     }
                     else
@@ -203,7 +181,5 @@
                 </div>
             </div>
         </div>
-        <!-- end content tabs -->
     </div>
 </section>
-<!-- end content -->

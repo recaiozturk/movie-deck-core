@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using MovieBringer.Core.DTOs;
 using MovieBringer.Core.DTOs.MovieListHistoryDTO;
 using MovieBringer.Core.Entities;
-using MovieBringer.Core.Models.MovieModels;
 using MovieBringer.Core.Repositories;
 using MovieBringer.Core.Services;
 using MovieBringer.Core.UnitOfWorks;

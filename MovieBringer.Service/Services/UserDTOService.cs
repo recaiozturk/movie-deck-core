@@ -1,16 +1,14 @@
 ﻿
 using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using MovieBringer.Core.DTOs.MovieListDTO;
-using MovieBringer.Core.DTOs;
-using MovieBringer.Core.Entities;
-using MovieBringer.Core.Repositories;
-using MovieBringer.WebApp.Util.Abstract;
-using Microsoft.EntityFrameworkCore;
-using MovieBringer.Core.DTOs.UserDTO;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using MovieBringer.Core.DTOs;
+using MovieBringer.Core.DTOs.UserDTO;
+using MovieBringer.Core.Entities;
 using MovieBringer.Core.Models.ViewModel.Profile;
 using MovieBringer.Core.Services;
+using MovieBringer.WebApp.Util.Abstract;
 
 namespace MovieBringer.Service.Services
 {
@@ -27,7 +25,6 @@ namespace MovieBringer.Service.Services
             _userManager = userManager;
         }
 
-        //get users
         public async Task<CustomResponseDto<IEnumerable<UserDTO>>> GetUserListAsync( )
         {
             var users = await _userManager.Users.ToListAsync();
@@ -36,7 +33,6 @@ namespace MovieBringer.Service.Services
             return CustomResponseDto<IEnumerable<UserDTO>>.Success(200, usersMapped);
         }
 
-        //get user by id
         public async Task<CustomResponseDto<UserDTO>> GetUserByIdAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -51,7 +47,6 @@ namespace MovieBringer.Service.Services
             }                      
         }
 
-        //create user
         public async Task<CustomResponseDto<UserDTO>> CreateUserAsync(UserCreateDto userCreateModel)
         {
             var user = _mapper.Map<AppUser>(userCreateModel);
@@ -69,14 +64,12 @@ namespace MovieBringer.Service.Services
             }
         }
 
-        //update user
         public async Task<CustomResponseDto<NoContentDto>> UpdateUserAsync(UserUpdateDto userUpdateModel)
         {
             var user = await _userManager.FindByIdAsync(userUpdateModel.Id);
 
             if (user != null)
             {
-                //user= _mapper.Map<AppUser>(userUpdateModel); update de userId track sorunu verir
                 user =_mapper.Map(userUpdateModel, user);
 
                 var updatedUserResult = await _userManager.UpdateAsync(user);
@@ -94,7 +87,6 @@ namespace MovieBringer.Service.Services
             return CustomResponseDto<NoContentDto>.Fail(404, "No User Found");
         }
 
-        //change password 
         public async Task<CustomResponseDto<UserDTO>> ChangePasswordAsync(ChangePasswordViewModel model)
         {
             var user = await _userManager.FindByIdAsync(model.Id);
@@ -117,7 +109,7 @@ namespace MovieBringer.Service.Services
             return CustomResponseDto<UserDTO>.Fail(404, "No User Found");
         }
 
-        //delete
+
         public async Task<CustomResponseDto<NoContentDto>> DeleteUserAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);

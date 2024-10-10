@@ -1,19 +1,13 @@
-﻿ 
+﻿
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
 using MovieBringer.Core.DTOs;
 using MovieBringer.Core.DTOs.MovieListDTO;
-using MovieBringer.Core.DTOs.UserDTO;
 using MovieBringer.Core.Entities;
 using MovieBringer.Core.Models.MovieModels;
 using MovieBringer.Core.Repositories;
 using MovieBringer.Core.Services;
 using MovieBringer.Core.UnitOfWorks;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MovieBringer.Service.Services
 {
@@ -85,7 +79,6 @@ namespace MovieBringer.Service.Services
         public async Task<CustomResponseDto<MovieListHistory>> CreateMovieListHistory(MovieListHistoryCreateModel movieListHistoryModel)
         {
             var movieListHisModel = _mapper.Map<MovieListHistory>(movieListHistoryModel);
-            //ilk dispay order atıyoruz
             movieListHisModel.DisplayOrder = await _movieListHistoryRepository.SetFirsDisplayOrder(movieListHistoryModel.MovieListId);
             var movieListHist = await _movieListHistoryRepository.AddAsync(movieListHisModel);
             await _unitOfWork.CommitAsync();
@@ -125,7 +118,6 @@ namespace MovieBringer.Service.Services
 
             if (movieHistory != null && movieHistory.DisplayOrder != 1)
             {
-                //cliente uygun hale getirilcek
                 var forwardHistory = await _movieListHistoryRepository.FindByDisplayOrder(movieHistory.DisplayOrder - 1,listId);
                 forwardHistory.DisplayOrder++;
                 _movieListHistoryRepository.Update(forwardHistory);

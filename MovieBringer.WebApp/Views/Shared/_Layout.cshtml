@@ -63,29 +63,15 @@
 
 
 <body class="body">
-    <!-- header -->
     <header class="header">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="header__content">
-                        <!-- header logo -->
                         <a  href="/" class="header__logo">
                             <img style="scale: 1.5;" src="~/Resource/MainHotFlix/img/logo.svg" alt="">
                         </a>
-                        <!-- end header logo -->
-                        <!-- header nav -->
                         <ul class="header__nav">
-
-
-                            @*@if (User.Identity.IsAuthenticated)
-                                {
-                                    <li class="header__nav-item">
-                                        <a asp-controller="swagger" asp-action="index" class="header__nav-link">API</a>
-                                    </li>
-                                }*@
-
-
                             <li class="header__nav-item">
                                 <a asp-controller="Movie" asp-action="Movies" class="header__nav-link">Movies</a>
                             </li>
@@ -94,10 +80,7 @@
                                 <a asp-controller="MovieList" asp-action="Index" class="header__nav-link">Lists</a>
                             </li>
 
-
                         </ul>
-                        <!-- end header nav -->
-                        <!-- header auth -->
                         <div class="header__auth">
                             <form action="#" class="header__search">
                                 <input id="headerSearch" class="header__search-input" type="text" placeholder="Search...">
@@ -119,18 +102,13 @@
                             <button class="header__search-btn" type="button">
                                 <i class="icon ion-ios-search"></i>
                             </button>
-
-                            <!-- dropdown -->
                             <div class="dropdown header__lang">
                                 <a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuLang" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">EN <i class="icon ion-ios-arrow-down"></i></a>
 
                                 <ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuLang">
                                     <li><a href="#">English</a></li>
-                                    @*<li><a href="#">Spanish</a></li>
-                <li><a href="#">Russian</a></li>*@
                                 </ul>
                             </div>
-                            <!-- end dropdown -->
 
                             @if (User.Identity?.IsAuthenticated == true)
                             {
@@ -144,12 +122,6 @@
                                     <span>Log Out</span>
                                 </a>
 
-                                @*<a style="" asp-controller="Account" asp-action="LogOut" method="post">
-                                    <button class="header__sign-in mt-auto" type="submit">
-                                        <i class="icon ion-ios-log-in"></i>
-                                        <span>Log Out</span>
-                                    </button>
-                                </a>*@
                             }
                             else
                             {
@@ -162,24 +134,19 @@
                             }
 
                         </div>
-                        <!-- end header auth -->
-                        <!-- header menu btn -->
                         <button class="header__btn" type="button">
                             <span></span>
                             <span></span>
                             <span></span>
                         </button>
-                        <!-- end header menu btn -->
                     </div>
                 </div>
             </div>
         </div>
     </header>
-    <!-- end header -->
 
     @RenderBody()
 
-    <!-- footer -->
     <footer class="footer">
         <div class="container">
             <div class="row">
@@ -188,13 +155,8 @@
                         <a href="index.html" class="footer__logo">
                             <img src="~/Resource/MainHotFlix/img/logo.svg" alt="">
                         </a>
-
                         <span class="footer__copyright"> Created by <a href="https://www.recaiozturk.com" target="_blank">Recai Öztürk</a></span>
-
                         <nav class="footer__nav">
-                            @*<a href="about.html">About Us</a>
-                                <a href="contacts.html">Contacts</a>
-                                <a href="privacy.html">Privacy policy</a>*@
                             @if (User.Identity.IsAuthenticated)
                             {
                                 <a asp-controller="swagger" asp-action="index">API</a>
@@ -210,9 +172,8 @@
             </div>
         </div>
     </footer>
-    <!-- end footer -->
-    <!-- JS -->
 
+    <!-- JS -->
     <script src="~/Resource/MainHotFlix/js/jquery-3.5.1.min.js"></script>
     <script src="~/Resource/MainHotFlix/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/jquery.min.js"></script>
@@ -300,12 +261,6 @@
             }
         });
     </script>
-
-
-
-
     @RenderSection("Scripts", required: false)
-
-
 </body>
 </html>

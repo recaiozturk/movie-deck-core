@@ -103,13 +103,10 @@
 
             </style>
         }
-        <!-- details content -->
         <div class="container">
             <div class="row">
-                <!-- title -->
                 <div class="col-12">
                     <h1 class="card__title"><a class="card__title" style="font-size: 25px;" asp-controller="Movie" asp-action="Detail" asp-route-id="@movie.MovieDetail.id"><span class="main-color">#@order&nbsp;&nbsp;</span>@movie.MovieDetail.title</a></h1>
-                    @*<h1 class="section__title section__title--mb"><span class="main-color">#@order&nbsp;&nbsp;</span>@movie.MovieDetail.title</h1>*@
                 </div>
 
                 @{ order++;}
@@ -117,7 +114,6 @@
                 <div class="col-12 col-xl-12">
                     <div class="card card--details">
                         <div class="row">
-                            <!-- card cover -->
                             <div class="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-5">
                                 <div class="card__cover" style="max-width:350px !important">
                                     <img src="@posterUrl" alt="">
@@ -185,13 +181,8 @@
             </div>
         </div>
     </section>
-    <!-- end details -->
-
-
 }
 
-
-<!-- modal edit -->
 <div id="modal-edit-skill" class="zoom-anim-dialog mfp-hide modal">
     <h6 class="modal__title">vote the list</h6>
 
@@ -261,7 +252,6 @@
         <button id="voteDismiss" class="modal__btn modal__btn--dismiss skillDissmisClick" type="button">Dismiss</button>
     </div>
 </div>
-<!-- end modal edit -->
 
 @section Scripts {
 
@@ -311,8 +301,6 @@
                         success: function (res) {
                             console.log(res)
                             if (!res.isValid) {
-                                //false ise daha önceden vote-oylanmamış ise
-
                                 $("#voteSave").removeClass("d-none");
                                 $("#voteArea").removeClass("d-none");
                                 $("#voteSaveAgain").addClass("d-none");

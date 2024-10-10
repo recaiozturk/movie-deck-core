@@ -7,30 +7,22 @@
 <style>
 </style>
 
-<!-- page title -->
 <section class="section section--first section--bg" data-bg="img/section/section.jpg">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="section__wrap">
-                    <!-- section title -->
                     <h2 class="section__title">My Profile</h2>
-                    <!-- end section title -->
-                    <!-- breadcrumb -->
                     <ul class="breadcrumb">
                         <li class="breadcrumb__item"><a href="index.html">Home</a></li>
                         <li class="breadcrumb__item breadcrumb__item--active">Profile</li>
                     </ul>
-                    <!-- end breadcrumb -->
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- end page title -->
-<!-- content -->
 <div class="content content--profile">
-    <!-- profile -->
     <div class="profile">
         <div class="container">
             <div class="row">
@@ -45,8 +37,6 @@
                                 <span>@Model.Email</span>
                             </div>
                         </div>
-
-                        <!-- content tabs nav -->
                         <ul class="nav nav-tabs content__tabs content__tabs--profile" id="content__tabs" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">Profile</a>
@@ -56,8 +46,6 @@
                                 <a class="nav-link" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">Settings</a>
                             </li>
                         </ul>
-                        <!-- end content tabs nav -->
-                        <!-- content mobile tabs nav -->
                         <div class="content__mobile-tabs content__mobile-tabs--profile" id="content__mobile-tabs">
                             <div class="content__mobile-tabs-btn dropdown-toggle" role="navigation" id="mobile-tabs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <input type="button" value="Profile">
@@ -72,20 +60,15 @@
                                 </ul>
                             </div>
                         </div>
-                        <!-- end content mobile tabs nav -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- end profile -->
-
     <div class="container">
-        <!-- content tabs -->
         <div class="tab-content">
             <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab">
                 <div class="row row--grid">
-                    <!-- stats list -->
                     <div class="col-12 col-sm-6 col-xl-3">
                         <div class="stats">
                             <span>Your List Count</span>
@@ -93,42 +76,12 @@
                             <i class="icon ion-ios-film"></i>
                         </div>
                     </div>
-                    <!-- end stats -->
-                    <!-- stats -->
-                    @*<div class="col-12 col-sm-6 col-xl-3">
-                            <div class="stats">
-                                <span>Rank(Soon)</span>
-                                <p><a href="#">200</a></p>
-                                <i class="icon ion-ios-film"></i>
-                            </div>
-                        </div>*@
-                    <!-- end stats -->
-                    <!-- stats -->
-                    @*<div class="col-12 col-sm-6 col-xl-3">
-                            <div class="stats">
-                                <span>Your comments(Soon)</span>
-                                <p><a href="#">2 573</a></p>
-                                <i class="icon ion-ios-chatbubbles"></i>
-                            </div>
-                        </div>*@
-                    <!-- end stats -->
-                    <!-- stats -->
-                    @*<div class="col-12 col-sm-6 col-xl-3">
-                            <div class="stats">
-                                <span>Your reviews(Soon)</span>
-                                <p><a href="#">1 021</a></p>
-                                <i class="icon ion-ios-star-half"></i>
-                            </div>
-                        </div>*@
-                    <!-- end stats -->
-                    <!-- dashbox -->
                     <div class="col-12 ">
                         <div class="dashbox">
                             <div class="dashbox__title">
                                 <h3><i class="icon ion-ios-film"></i> Your Lists</h3>
 
                                 <div class="dashbox__wrap">
-                                    @*<a class="dashbox__refresh" href="#"><i class="icon ion-ios-refresh"></i></a>*@
                                     <a asp-controller="MovieList" asp-action="CreateList" style="width: auto;padding:10px" class="dashbox__more ali">Create New List</a>
                                 </div>
                             </div>
@@ -186,179 +139,11 @@
                             </div>
                         </div>
                     </div>
-                    <!-- end dashbox -->
-                    <!-- dashbox -->
-                    @*<div class="col-12 col-xl-6">
-                            <div class="dashbox">
-                                <div class="dashbox__title">
-                                    <h3><i class="icon ion-ios-star-half"></i> Latest reviews(Soon)</h3>
-
-                                    <div class="dashbox__wrap">
-                                        <a class="dashbox__refresh" href="#"><i class="icon ion-ios-refresh"></i></a>
-                                        <a class="dashbox__more" href="#">View All</a>
-                                    </div>
-                                </div>
-
-                                <div class="dashbox__table-wrap">
-                                    <table class="main__table main__table--dash">
-                                        <thead>
-                                            <tr>
-                                                <th>ITEM</th>
-                                                <th>AUTHOR</th>
-                                                <th>RATING</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="main__table-text"><a href="#">I Dream in Another Language</a></div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text">John Doe</div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 7.2</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="main__table-text"><a href="#">Benched</a></div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text">John Doe</div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 6.3</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="main__table-text"><a href="#">Whitney</a></div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text">John Doe</div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 8.4</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="main__table-text"><a href="#">Blindspotting</a></div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text">John Doe</div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 9.0</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="main__table-text"><a href="#">I Dream in Another Language</a></div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text">John Doe</div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 7.7</div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>*@
-                    <!-- end dashbox -->
-                    <!-- dashbox -->
-                    @*<div class="col-12 col-xl-6">
-                            <div class="dashbox">
-                                <div class="dashbox__title">
-                                    <h3><i class="icon ion-ios-star-half"></i> Latest reviews(Soon)</h3>
-
-                                    <div class="dashbox__wrap">
-                                        <a class="dashbox__refresh" href="#"><i class="icon ion-ios-refresh"></i></a>
-                                        <a class="dashbox__more" href="#">View All</a>
-                                    </div>
-                                </div>
-
-                                <div class="dashbox__table-wrap">
-                                    <table class="main__table main__table--dash">
-                                        <thead>
-                                            <tr>
-                                                <th>ITEM</th>
-                                                <th>AUTHOR</th>
-                                                <th>RATING</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="main__table-text"><a href="#">I Dream in Another Language</a></div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text">John Doe</div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 7.2</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="main__table-text"><a href="#">Benched</a></div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text">John Doe</div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 6.3</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="main__table-text"><a href="#">Whitney</a></div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text">John Doe</div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 8.4</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="main__table-text"><a href="#">Blindspotting</a></div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text">John Doe</div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 9.0</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="main__table-text"><a href="#">I Dream in Another Language</a></div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text">John Doe</div>
-                                                </td>
-                                                <td>
-                                                    <div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i> 7.7</div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>*@
-                    <!-- end dashbox -->
                 </div>
             </div>
 
             <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="2-tab">
                 <div class="row">
-                    <!-- details form -->
                     <div class="col-12 col-lg-6">
                         <form id="profileDetail" action="#" class="form form--profile">
                             <div class="row row--form">
@@ -405,8 +190,6 @@
                             </div>
                         </form>
                     </div>
-                    <!-- end details form -->
-                    <!-- password form -->
                     <div class="col-12 col-lg-6">
                         <form id="changePasswordForm" class="form form--profile">
                             <div class="row row--form">
@@ -442,15 +225,11 @@
                             </div>
                         </form>
                     </div>
-                    <!-- end password form -->
                 </div>
             </div>
         </div>
-        <!-- end content tabs -->
     </div>
 </div>
-<!-- end content -->
-<!-- modal list delete -->
 <div id="modal-list-delete" class="zoom-anim-dialog mfp-hide modal">
     <h6 class="modal__title">List delete</h6>
     <div id="delete-exp-error">
@@ -462,21 +241,8 @@
         <button class="modal__btn modal__btn--dismiss skillDissmisClick" type="button">Dismiss</button>
     </div>
 </div>
-<!-- end modal list delete -->
 
 @section Scripts {
-
-
-
-    @*<script src="profile-index-bundle"></script>*@
-
-    @*<environment names="Development">
-        <script src="profile-index-bundle" debug="false"></script>
-    </environment>
-
-    <environment names="Production">
-        <script src="profile-index-bundle"></script>
-    </environment>*@
 
 <script>
     $(document).ready(function () {
@@ -509,8 +275,6 @@
                     })
 
                 } else {
-                    //alert("error")
-                    //toast error
                 }
             },
             error: function (xhr, status, error) {
@@ -524,7 +288,6 @@
         $("#submitProfileBtn").addClass("btnDisabled");
 
         var formData = $("#profileDetail").serialize();
-
 
         $.ajax({
             type: 'POST',
@@ -572,7 +335,6 @@
             success: function (res) {
                 if (!res.isValid) {
                     $('#change-password-error').empty();
-                    console.log(res.errorMessages);
                     $.each(res.errorMessages, function (key, value) {
                         $("#change-password-error").append("<span class='model-danger mt-3'>" + value + '</span><br/>');
                     });

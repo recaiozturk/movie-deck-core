@@ -14,15 +14,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section__wrap">
-                        <!-- section title -->
                         <h2 class="section__title">Edit List</h2>
-                        <!-- end section title -->
-                        <!-- breadcrumb -->
                         <ul class="breadcrumb">
                             <li class="breadcrumb__item"><a href="index.html">Home</a></li>
                             <li class="breadcrumb__item breadcrumb__item--active">Profile</li>
                         </ul>
-                        <!-- end breadcrumb -->
                     </div>
                 </div>
             </div>
@@ -93,7 +89,6 @@
                         </div>
                     </form>
                 </div>
-                <!-- details form -->
                 <div class="col-12 col-lg-6">
                     <form id="profileDetail" asp-controller="MovieList" asp-action="EditList" class="form form--profile">
                         <input type="hidden" name="Id" id="movieListID" value="@Model.Id" />
@@ -135,7 +130,6 @@
                         </div>
                     </form>
                 </div>
-                <!-- end details form -->
             </div>
         </div>
     </div>
@@ -143,7 +137,6 @@
 
 </div>
 
-<!-- modal list delete -->
 <div id="modal-list-delete" class="zoom-anim-dialog mfp-hide modal">
     <h6 class="modal__title">List delete</h6>
     <div id="delete-exp-error">
@@ -155,7 +148,6 @@
         <button class="modal__btn modal__btn--dismiss skillDissmisClick" type="button">Dismiss</button>
     </div>
 </div>
-<!-- end modal list delete -->
 
 
 @section Scripts{
@@ -163,14 +155,6 @@
     <script>
         const LISTID=@Model.Id;
     </script>
-
-    @*<environment names="Development">
-        <script src="movielist-editlist-bundle" debug="true"></script>
-    </environment>
-
-    <environment names="Production">
-        <script src="movielist-editlist-bundle"></script>
-    </environment>*@
 
 <script>
     $(document).ready(function () {
@@ -225,7 +209,6 @@
             }
         });
 
-        //listeye film ekleme
         $('.search-results').on('click', '.movie', function () {
 
             $('.t-center').addClass('d-block');
@@ -291,7 +274,6 @@
                         $('.t-center').addClass('d-none');
                         $('.t-center').removeClass('d-block');
                         
-                        //toast error
                         MyToast.fire({
                             icon: 'error',
                             title: response.errorMessage
@@ -328,7 +310,6 @@
                         icon: 'error',
                         title: response.message
                     })
-                    //toast error
                 }
             },
             error: function (xhr, status, error) {
@@ -367,7 +348,6 @@
                     $('.t-center').removeClass('d-block');
                     $("#btnSpinner_" + movieHistId).empty().append('<i class="icon ion-ios-trash"></i>');
                     alert("error")
-                    //toast error
                 }
             },
             error: function (xhr, status, error) {

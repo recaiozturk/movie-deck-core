@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using MovieBringer.Core.DTOs;
 using MovieBringer.Core.Models.ViewModel.Account;
 using MovieBringer.Core.Services;
-using MovieBringer.Service.Services;
 
 
 namespace MovieBringer.WebApp.Controllers.api

@@ -102,8 +102,6 @@
             }
 
             <div class="row">
-
-                <!-- section title -->
                 <div class="col-12 mt-5">
                     <div class="section__title-wrap">
                         <h2 class="section__title">@list.ListName <span class="how__text ml-3">added by <a class="main-color" asp-controller="Profile" asp-action="UserProfile" asp-route-userId="@list.MovieListOwnerId"> @list.MovieListOwner</a></span> <span class="how__text ml-3"><i class="icon ion-ios-star-outline"></i> : <a class="main-color" href="#"> @list.MovieListRank</a></span> <span class="how__text ml-3"><a href="#modal-edit-skill" listId="@list.MovieListId" listOwnerId="@list.MovieListOwnerId" class="main-color opening_modal_vote open-modalCustom"> vote the list</a></span> </h2>
@@ -130,8 +128,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- end section title -->
-                <!-- carousel -->
                 <div class="col-12">
                     <div class="owl-carousel section__carousel" id="carousel_@list.MovieListId">
 
@@ -168,8 +164,6 @@
                             </div>
 
                         }
-
-
                         @{
                             if (addToDummy > 0)
                             {
@@ -195,13 +189,11 @@
                         }
                     </div>
                 </div>
-                <!-- carousel -->
             </div>
         }
     </div>
 </section>
 
-<!-- modal edit -->
 <div id="modal-edit-skill" class="zoom-anim-dialog mfp-hide modal">
     <h6 class="modal__title">vote the list</h6>
 
@@ -233,7 +225,6 @@
                     <input class="star star-6" id="star-6" type="radio" data="6" name="star" />
 
                     <label class="star star-6" for="star-6"></label>
-
 
                     <input class="star star-5" id="star-5" type="radio" data="5" name="star" />
 
@@ -271,7 +262,6 @@
         <button id="voteDismiss" class="modal__btn modal__btn--dismiss skillDissmisClick" type="button">Dismiss</button>
     </div>
 </div>
-<!-- end modal edit -->
 @section Scripts {
 
     <script>
@@ -320,8 +310,6 @@
                         success: function (res) {
                             console.log(res)
                             if (!res.isValid) {
-                                //false ise daha önceden vote-oylanmamış ise
-
                                 $("#voteSave").removeClass("d-none");
                                 $("#voteArea").removeClass("d-none");
                                 $("#voteSaveAgain").addClass("d-none");

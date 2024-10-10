@@ -13,10 +13,6 @@ namespace MovieBringer.Repository.Configurations
             builder.Property(x => x.Id).UseIdentityColumn(); 
 
             builder.ToTable("MovieListHistorys"); 
-
-
-
-
         }
     }
 }

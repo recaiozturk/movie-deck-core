@@ -1,10 +1,7 @@
 ﻿using MovieBringer.Core.DTOs;
 using MovieBringer.Core.Models.MovieModels;
 using MovieBringer.WebApp.Services.Abstract;
-using Newtonsoft.Json;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security.Policy;
 using static MovieBringer.Core.Models.MovieModels.MovieImage;
 using static MovieBringer.Core.Models.MovieModels.MovieVideo;
 
@@ -32,13 +29,11 @@ namespace MovieBringer.WebApp.Services.Concrate
 
         public async Task<CustomResponseDto<RootCast>> GetMovieCast(int movieID, string token)
         {
-
             string url = $"movie/{movieID}/credits?language=en-US";
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var cast = await _httpClient.GetFromJsonAsync<RootCast>(url);
 
             return CustomResponseDto<RootCast>.Success(200, cast);
-
         }
 
         public async Task<CustomResponseDto<MovieDetail>> GetMovieDetail(int movieId, string token)
@@ -64,7 +59,6 @@ namespace MovieBringer.WebApp.Services.Concrate
             var moviesForSend = movies.Take(movieCount);
 
             return CustomResponseDto<List<Movie>>.Success(200, moviesForSend.ToList());
-
         }
 
         public async Task<CustomResponseDto<List<Movie>>> GetMoviesSmiler(int movieID, string token)
@@ -74,7 +68,6 @@ namespace MovieBringer.WebApp.Services.Concrate
             var response = await _httpClient.GetFromJsonAsync<Root>(url);
             var movies = ResponseToMovieList(response);
             return CustomResponseDto<List<Movie>>.Success(200, movies);
-
         }
 
         public async Task<CustomResponseDto<RootVideo>> GetMovieVideos(int movieID, string token)
@@ -84,7 +77,6 @@ namespace MovieBringer.WebApp.Services.Concrate
             var videos = await _httpClient.GetFromJsonAsync<RootVideo>(url);
 
             return CustomResponseDto<RootVideo>.Success(200, videos);
-
         }
 
         public List<Movie> ResponseToMovieList(Root response)

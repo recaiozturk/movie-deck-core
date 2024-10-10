@@ -4,11 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
-<!-- home -->
 <section class="home">
-    <!-- home bg -->
     <div class="owl-carousel home__bg">
         <div class="item home__cover" data-bg="Resource/MainHotFlix/img/home/homebg.jpg"></div>
         <div class="item home__cover" data-bg="Resource/MainHotFlix/img/home/home__bg2.jpg"></div>
@@ -16,8 +12,6 @@
         <div class="item home__cover" data-bg="Resource/MainHotFlix/img/home/home__bg4.jpg"></div>
         <div class="item home__cover" data-bg="Resource/MainHotFlix/img/home/home__bg5.jpg"></div>
     </div>
-    <!-- end home bg -->
-
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -30,7 +24,6 @@
                     <i class="icon ion-ios-arrow-round-forward"></i>
                 </button>
             </div>
-
             <div class="col-12">
 
                 @if (Model.TrendingInWeeks != null)
@@ -62,23 +55,16 @@
                 {
                     <h3 class="card__title"> An error occurred while importing trending movies</h3>
                 }
-
-
             </div>
         </div>
     </div>
 </section>
-<!-- end home -->
-<!-- content -->
 <section class="content">
     <div class="content__head">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <!-- content title -->
                     <h1 class="home__title"><b>Now Playing</b> And More</h1>
-                    <!-- end content title -->
-                    <!-- content tabs nav -->
                     <ul class="nav nav-tabs content__tabs" id="content__tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">NOW PLAYING</a>
@@ -103,8 +89,6 @@
                         <a asp-controller="Movie" asp-action="Movies" class="section__view view-all-btn no-mobile">View All</a>
                     </div>
 
-                    <!-- end content tabs nav -->
-                    <!-- content mobile tabs nav -->
                     <div class="content__mobile-tabs" id="content__mobile-tabs">
                         <div class="content__mobile-tabs-btn dropdown-toggle" role="navigation" id="mobile-tabs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <input type="button" value="New releases">
@@ -125,14 +109,12 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- end content mobile tabs nav -->
                 </div>
             </div>
         </div>
     </div>
 
     <div class="container">
-        <!-- content tabs -->
         <div class="tab-content">
             <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab">
                 <div class="row row--grid">
@@ -142,7 +124,6 @@
                         @foreach (var movie in Model.NowPlayings.Take(6))
                         {
                             string img = "https://media.themoviedb.org/t/p/w300_and_h450_bestv2" + movie.poster_path;
-                            <!-- card -->
                             <div class="col-6 col-sm-4 col-md-3 col-xl-2">
                                 <div class="card">
                                     <div class="card__cover">
@@ -160,7 +141,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- end card -->
                         }
                     }
                     else
@@ -178,7 +158,6 @@
                         @foreach (var movie in Model.UpComing.Take(6))
                         {
                             string img = "https://media.themoviedb.org/t/p/w300_and_h450_bestv2" + movie.poster_path;
-                            <!-- card -->
                             <div class="col-6 col-sm-4 col-md-3 col-xl-2">
                                 <div class="card">
                                     <div class="card__cover">
@@ -196,7 +175,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- end card -->
                         }
                     }
                     else
@@ -214,7 +192,6 @@
                         @foreach (var movie in Model.Popular.Take(6))
                         {
                             string img = "https://media.themoviedb.org/t/p/w300_and_h450_bestv2" + movie.poster_path;
-                            <!-- card -->
                             <div class="col-6 col-sm-4 col-md-3 col-xl-2">
                                 <div class="card">
                                     <div class="card__cover">
@@ -232,7 +209,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- end card -->
                         }
                     }
                     else
@@ -250,7 +226,6 @@
                         @foreach (var movie in Model.TopRated.Take(6))
                         {
                             string img = "https://media.themoviedb.org/t/p/w300_and_h450_bestv2" + movie.poster_path;
-                            <!-- card -->
                             <div class="col-6 col-sm-4 col-md-3 col-xl-2">
                                 <div class="card">
                                     <div class="card__cover">
@@ -268,7 +243,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- end card -->
                         }
                     }
                     else
@@ -279,17 +253,14 @@
                 </div>
             </div>
         </div>
-        <!-- end content tabs -->
+
     </div>
 </section>
-<!-- end content -->
-<!-- section list1 most populer list -->
 @if (Model.MostPopulerList != null)
 {
     <section class="section section--border">
         <div class="container">
             <div class="row">
-                <!-- section title -->
                 <div class="col-12">
                     <div class="section__title-wrap">
                         <h2 class="section__title">Most Populer List:  <a style=" color: #f9ab00;" asp-controller="MovieList" asp-action="ListDetail" asp-route-listId="@Model.MostPopulerList.MovieListId" class="">@Model.MostPopulerList.ListName</a> added by:<a style=" color: #f9ab00;" asp-controller="Profile" asp-action="UserProfile" asp-route-userId="@Model.MostPopulerList.ListOwnerId" class="">@Model.MostPopulerList.ListOwner</a></h2>
@@ -307,8 +278,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- end section title -->
-                <!-- carousel -->
                 <div class="col-12">
                     <div class="owl-carousel section__carousel" id="carousel1">
 
@@ -332,20 +301,16 @@
                         }
                     </div>
                 </div>
-                <!-- carousel -->
             </div>
         </div>
     </section>
 }
 
-<!-- end section -->
-<!-- section list2 recently added list -->
 @if (Model.MostPopulerList != null)
 {
     <section class="section section--border">
         <div class="container">
             <div class="row">
-                <!-- section title -->
                 <div class="col-12">
                     <div class="section__title-wrap">
                         <h2 class="section__title">Last Added List:  <a style=" color: #f9ab00;" asp-controller="MovieList" asp-action="ListDetail" asp-route-listId="@Model.LastAddedList.MovieListId" class="">@Model.LastAddedList.ListName</a> added by:<a style=" color: #f9ab00;" asp-controller="Profile" asp-action="UserProfile" asp-route-userId="@Model.LastAddedList.ListOwnerId" class="">@Model.LastAddedList.ListOwner</a></h2>
@@ -363,8 +328,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- end section title -->
-                <!-- carousel -->
                 <div class="col-12">
                     <div class="owl-carousel section__carousel" id="carousel1">
 
@@ -388,7 +351,6 @@
                         }
                     </div>
                 </div>
-                <!-- carousel -->
             </div>
         </div>
     </section>

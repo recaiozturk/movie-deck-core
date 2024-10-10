@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieBringer.Core.Models.MovieModels;
 using MovieBringer.Core.Models.ViewModel.Home;
-using MovieBringer.Core.Models.ViewModel.Profile;
-using MovieBringer.WebApp.Models;
 using MovieBringer.WebApp.Services.Abstract;
 using static MovieBringer.Core.Models.MovieModels.MovieVideo;
 

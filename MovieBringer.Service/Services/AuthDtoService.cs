@@ -33,7 +33,6 @@ namespace MovieBringer.Service.Services
             _signInManager = signInManager;
             _tokenHandler = tokenHandler;
         }
-        //create-register user
         public async Task<CustomResponseDto<NoContentDto>> CreateUserAsync(RegisterViewModel registerViewModel)
         {
             AppUser user = _mapper.Map<AppUser>(registerViewModel);
@@ -58,7 +57,6 @@ namespace MovieBringer.Service.Services
             }
         }
 
-        //login
         public async Task<CustomResponseDto<object>> Login(LoginViewModel model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
@@ -85,11 +83,9 @@ namespace MovieBringer.Service.Services
             else
             {
                 return CustomResponseDto<object>.Fail(300, "Invalid email or password");
-            }
-            
+            }          
         }
 
-        //forgot password
         public async Task<CustomResponseDto<NoContentDto>> ForgotPassword(ForgetPasswordViewModel model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
@@ -107,7 +103,6 @@ namespace MovieBringer.Service.Services
             
         }
 
-        //verify reset password
         public async Task<CustomResponseDto<NoContentDto>> ResetPassword(ResetPasswordViewModel model)
         {
             var user = await _userManager.FindByIdAsync(model.UserId);
@@ -130,7 +125,6 @@ namespace MovieBringer.Service.Services
             }
         }
 
-        //logout
         public async Task<CustomResponseDto<NoContentDto>> LogOut()
         {
             await _signInManager.SignOutAsync();
