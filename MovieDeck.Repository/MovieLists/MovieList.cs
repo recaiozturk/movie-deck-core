@@ -1,4 +1,6 @@
-﻿namespace MovieBringer.Core.Entities
+﻿using MovieDeck.Repository.Shared.Entities;
+
+namespace MovieDeck.Repository.MovieLists
 {
     public class MovieList:BaseEntity
     {

@@ -1,6 +1,9 @@
-﻿namespace MovieBringer.Core.Entities
+﻿
+using MovieDeck.Service.Shared;
+
+namespace MovieDeck.Service.MovieLists.Dtos
 {
-    public class MovieList:BaseEntity
+    public class MovieListDto:BaseDto
     {
         public string UserId { get; set; } = null!;
         public string ListOwner { get; set; } = null!;

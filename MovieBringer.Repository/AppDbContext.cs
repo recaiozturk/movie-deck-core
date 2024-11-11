@@ -58,13 +58,7 @@ namespace MovieBringer.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            //bu assymble deki tüm configire ettiğimiz dosyaları uygula ,fluent api ile uyguladıgımız ayarlar
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-            //tek tek de asagıdak igibi yapılır
-            //modelBuilder.ApplyConfiguration(new ProductConfiguration());
-
             base.OnModelCreating(modelBuilder);
         }
     }

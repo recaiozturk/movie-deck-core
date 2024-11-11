@@ -1,9 +1,9 @@
-﻿
-using MovieBringer.Core.Entities;
+﻿using MovieDeck.Repository.Shared;
+using MovieDeck.Repository.Shared.Entities;
 
-namespace MovieBringer.Core.Repositories
+namespace MovieDeck.Repository.MovieLists
 {
-    public interface IMovieListRepository:IGenericRepository<MovieList>
+    public interface IMovieListRepository: IGenericRepository<MovieList>
     {
         Task<List<MovieList>> GetListsByUserId(string userID);
         Task<List<MovieList>> GetPublicLists();

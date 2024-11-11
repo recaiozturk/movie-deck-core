@@ -1,0 +1,6 @@
+@MovieDeck.Api_HostAddress = http://localhost:5234
+
+GET {{MovieDeck.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
