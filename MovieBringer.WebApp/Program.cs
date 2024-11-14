@@ -1,12 +1,9 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using FormHelper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using MovieBringer.Core.Entities;
-using MovieBringer.Core.Models.ViewModel.Account;
 using MovieBringer.Core.Repositories;
 using MovieBringer.Core.Services;
 using MovieBringer.Core.UnitOfWorks;
@@ -24,7 +21,6 @@ using MovieBringer.WebApp.Services.Concrate;
 using MovieBringer.WebApp.Util;
 using MovieBringer.WebApp.Util.Abstract;
 using Smidge;
-using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);
