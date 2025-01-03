@@ -4,7 +4,8 @@ namespace MovieDeck.Repository.MovieLists
 {
     public class MovieList:BaseEntity
     {
-        public string UserId { get; set; } = null!;
+        //public string UserId { get; set; } = null!;
+        public Guid UserId { get; set; }
         public string ListOwner { get; set; } = null!;
         public double? ListRank { get; set; }
         public string ListName { get; set; } = null!;

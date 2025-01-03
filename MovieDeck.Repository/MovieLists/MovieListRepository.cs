@@ -14,7 +14,7 @@ namespace MovieBringer.Repository.Repositories
 
         public async Task<List<MovieList>> GetListsByUserId(string userID)
         {
-            return await _context.MovieLists.Where(l => l.UserId == userID).ToListAsync();
+            return await _context.MovieLists.Where(l => l.UserId == new Guid(userID)).ToListAsync();
         }
 
         public async Task<int> GetMostPopulerListId()
