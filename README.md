@@ -4,7 +4,7 @@ It is a website where you can create your own movie lists and rate these lists. 
 
 In the project, member transactions and list crud transactions are carried out dynamically in our own database. I obtained the movie information through OMDB API
 
-[Try it live](http://moviedeck.com.tr)
+[Try it live](https://gracious-hellman.77-245-148-209.plesk.page)
 
 ## Tech Stack 
 
